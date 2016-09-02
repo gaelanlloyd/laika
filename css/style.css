@@ -1,0 +1,157 @@
+/* IE10 viewport hack for Surface/desktop Windows 8 bug - http://getbootstrap.com/getting-started/#support-ie10-width */
+@-webkit-viewport { width: device-width; }
+@-moz-viewport    { width: device-width; }
+@-ms-viewport     { width: device-width; }
+@-o-viewport      { width: device-width; }
+@viewport         { width: device-width; }
+
+/* -------------------------------------------------------------------------- */
+
+body { padding-top: 50px; }
+
+body, p, td, th, li { font-size: 13px; font-family: 'Open Sans', Arial, sans-serif; }
+body strong { font-weight: 700; }
+
+.sub-header { padding-bottom: 10px; border-bottom: 1px solid #EEEEEE; }
+
+/* --- TEXT ----------------------------------------------------------------- */
+
+h1 { font-size: 28px; margin-top: 2em; }
+h2 { font-size: 22px; margin-top: 2em; }
+h3 { font-size: 20px; margin-top: 2em; }
+h4 { font-size: 18px; margin-top: 2em; }
+h5 { font-size: 16px; margin-top: 2em; }
+
+h1, h2, h3, h4, h5, p, li { line-height: 1.5em; }
+
+h1.page-header { margin-bottom: 0; border: 0; }
+h2.chartTitle { margin-top: 0; }
+
+/* --- COMMON STYLES -------------------------------------------------------- */
+
+.addMarginTop { margin-top: 2em; }
+.addMarginBottom { margin-bottom: 2em; }
+.mt0 { margin-top: 0 !important; }
+.mb0 { margin-bottom: 0 !important; }
+.bb0 { border-bottom: 0 !important; }
+
+.monospace { font-family: monospace; }
+
+/* --- TOP NAV -------------------------------------------------------------- */
+
+.navbar-fixed-top { border: 0; }
+.navbar-brand { padding: 0; }
+
+.navbar-inverse .navbar-nav > li > a,
+.navbar-fixed-top label { color: #FFFFFF; font-weight: normal; }
+
+/* --- Form controls */
+
+.navbar-form .form-control { font-size: 12px; height: 24px; padding: 0 6px; margin-top: 4px; }
+.navbar-form label { font-size: 14px; position: relative; top: 4px; }
+
+/* --- SIDE NAV ------------------------------------------------------------- */
+
+.sidebar { background-color: #F5F5F5; }
+
+.sidebar li { line-height: 1em; }
+.sidebar li.disabled { font-weight: 700; }
+.sidebar li.disabled a:hover { cursor: default; }
+
+.sidebar a.disabled { color: #C0C0C0; }
+
+/* --- CHARTS --------------------------------------------------------------- */
+
+canvas { margin-bottom: 50px; }
+.reportChart { height: 400px; margin: 2em 0; }
+
+/* --- TABLES --------------------------------------------------------------- */
+
+.table { width: auto; max-width: inherit; margin: 0 auto; }
+
+.table thead tr th,
+.table tbody tr th,
+.table tbody tr td { padding: 0.5em 2em 0.5em 0.5em; }
+
+.indicator { width: 3em; height: 1em; }
+
+/* --- TABLE LEGEND --------------------------------------------------------- */
+
+.legend { margin: 0 0 2em 0; }
+.legend table { margin: 0 auto; }
+.legend .series { padding: 0 1em; }
+.legend .indicator { width: 3em; height: 1em; margin: 0 auto 0.25em auto; }
+
+/* --- MISC ----------------------------------------------------------------- */
+
+.homepageLogo { margin-top: 60px; }
+.demoMarker { background-color: #FF0000; border-radius: 10px; padding: 0.5em 1em; position: relative; top: 15px; color: #FFFFFF; font-weight: bold; }
+
+/* --- ERROR ---------------------------------------------------------------- */
+
+.error { background-color: #F5A9A9; border: 1px solid #F58080; }
+
+.error,
+.error li { font-family: monospace; font-size: 14px; }
+.error ul { margin-top: 1em; }
+
+/* --- DEBUG ---------------------------------------------------------------- */
+
+.debug h1, .debug h2, .debug h3, .debug h4, .debug h5 { margin-top: 1em; }
+.debug h3 { margin-top: 2em; border-bottom: 1px solid #A0A0A0; }
+.debug hr { border-color: #A0A0A0; background-color: #A0A0A0; }
+
+/* --- RESPONSIVE ----------------------------------------------------------- */
+
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    border-right: 1px solid #EEEEEE;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus { color: #FFFFFF; background-color: #0066AA; font-weight: 700; }
+
+
+.main { padding: 20px; }
+
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders { margin-bottom: 30px; text-align: center; }
+.placeholders h4 { margin-bottom: 0; }
+.placeholder { margin-bottom: 20px; }
+.placeholder img { display: inline-block; border-radius: 50%; }

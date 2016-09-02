@@ -1,0 +1,231 @@
+<?php
+
+function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternateSiteNames = NULL) {
+
+	global $DATABASE;
+	global $NUM_MONTHS;
+	global $TBL_DATA;
+	global $TBL_SITES;
+	global $TBL_METRICS;
+	global $TBL_GOALS;
+
+	// $reportItem could be:
+	// - a single integer (report on one measurement)
+	// - a comma-separated list of integers (report on several measurements)
+
+	// $site is an optional array
+	// - omit it and data for all non-ignored sites will be returned
+	// - specify it as a comma-separated list of sites
+
+	// $sitesAsSeries is optional
+	// - transposes $reportItem for $site (like in the uptime report)
+
+	// $useAlternateSiteNames is optional
+	// - if specified, the altnames field is used for site titles
+	// - useful in the uptime report when "EN" sitename doesn't make sense
+
+    // -------------------------------------------------------------------------
+    // CHECK FOR ERRORS
+
+    $out = "";
+
+    $error = FALSE;
+    $errorList = array();
+
+    /*
+    if ( !is_null( $site ) && !is_numeric( $site ) ) {
+    	$error = TRUE;
+    	$errorList[] = $GLOBALS['txtInvalidSiteParameter'];
+    }
+    */
+
+    // -------------------------------------------------------------------------
+
+    if ($error) {
+        $out .= writeError( __FUNCTION__ , $errorList );
+        return $out;
+    }
+
+    // -------------------------------------------------------------------------
+
+	$reportItems = explode(",", $reportItem);
+
+	if (count($reportItems) == 1) {
+		$isSingleReport = TRUE;
+	} else {
+		$isSingleReport = FALSE;
+	}
+
+	// -------------------------------------------------------------------------
+
+	// Determine the latest month of data from the database
+	// - Don't show any figures past this date, otherwise the charts will proceed off to zero
+	// - Once the latest data is fetched and added, it will be shown on the chart
+	// - Useful for the demo site, where the dummy data is limited to a fixed set from the past
+
+	$maxDate = $DATABASE->max($TBL_DATA, "date");
+
+	// DEBUG
+	// echo "<pre>maxDate = " . $maxDate . "</pre>";
+
+	$currentDate = strtotime($maxDate . ' 01:00:00');
+
+	// Get the month number
+	$thisMonth = date("m", $currentDate);
+
+	// The report's end date (based on max TBL_DATA date)
+	$dateToday = date("Y-m-d", $currentDate);
+
+	// The report's starting date
+	// - Subtract NUM_MONTHS from the first day of the current month
+	$dateStart = date("Y-m-d",strtotime("$thisMonth/1 -$NUM_MONTHS months"));
+
+	// Get the list of months the data should be pulled for
+	$theseMonths = array();
+
+	for ( $i = $NUM_MONTHS - 1; $i >= 0; $i-- ) {
+		$theseMonths[] = date("Y-m-d",strtotime("$thisMonth/1 -$i months"));
+	}
+
+	// DEBUG
+	/*
+	echo "<pre>date start = " . $dateStart . "\n";
+	echo "date end = " . $dateToday . "</pre>";
+
+	echo "<pre>theseMonths = \n";
+	echo print_r( $theseMonths );
+	echo "</pre>";
+	*/
+
+	// Prepare holder array
+	$values = array();
+	// $axisLabels = array();
+
+	// get data from specified sites
+	if ($site == NULL) {
+
+		// get data for all sites except those to ignore
+		$sites = $DATABASE->select($TBL_SITES, "*",
+			array( "ignore[!]" => 1 )
+		);
+
+	} else {
+
+		$siteItems = explode(",", $site);
+
+		// get data for the specific sites passed
+		$sites = $DATABASE->select($TBL_SITES, "*",
+			array( "id" => $siteItems )
+		);
+
+	}
+
+	// DEBUG
+	/*
+	echo "<pre>sites = \n";
+	echo print_r( $sites );
+	echo "</pre>";
+	*/
+
+	// - For each site returned
+	foreach ($sites as $site) {
+
+		// DEBUG
+		/*
+		echo "<pre>site[] = \n";
+		echo print_r( $site, TRUE );
+		echo "</pre>";
+		*/
+
+		// - For each item in the report
+		foreach ($reportItems as $item) {
+
+			/*
+			// - Get the data for that item
+			$siteData = $DATABASE->select($TBL_DATA, "*", [
+				"AND" => [
+					"data_id" => $item,
+					"site" => $site["id"],
+					"date[<>]" => [$dateStart,$dateToday]
+				],
+				"ORDER" => "date"
+			]);
+			*/
+
+			// - For each month in the list of months to get data for
+
+			// Loop through the requested months, not the available data, otherwise you'll
+			// put data in places where it doesn't exist in the DB.  Put zeroes instead.
+
+			foreach ($theseMonths as $theseMonthsItem) {
+
+				// - Get the data for that item for that given month
+				$siteData = $DATABASE->select($TBL_DATA, "*", [
+					"AND" => [
+						"data_id" => $item,
+						"site" => $site["id"],
+						"date" => $theseMonthsItem
+					]
+				]);
+
+				// DEBUG
+				/*
+				echo "<pre>siteData[] = \n";
+				echo print_r( $siteData, TRUE );
+				echo "</pre>";
+				*/
+
+				// If there isn't any data for that given month, store a zero
+
+				if (empty($siteData)) {
+					$thisValue = 0;
+				} else {
+					$thisValue = $siteData[0]["value"];
+				}
+
+				// Store each value
+
+				if ($useAlternateSiteNames) {
+
+					// Is an alternate site name provided?
+
+					if (strlen($site["alt_name"]) > 0) {
+						$thisSiteName = $site["alt_name"];
+					} else {
+						$thisSiteName = $site["name"];
+					}
+
+				} else {
+
+					$thisSiteName = $site["name"];
+
+				}
+
+				// Do we need to flip sites as the series?
+
+				if ($sitesAsSeries) {
+					$values[$item][$thisSiteName][$theseMonthsItem] = $thisValue;
+				} else {
+					$values[$thisSiteName][$item][$theseMonthsItem] = $thisValue;
+				}
+
+			}  // end foreach theseMonthsItem
+		}  // end foreach reportItem
+	} // end foreach site
+
+	// DEBUG
+	/*
+	echo "<pre>getData( \$values ) = \n";
+	echo print_r( $values, TRUE );
+	echo "</pre>";
+
+	echo "<pre>getData( \$axisLabels ) = \n";
+	echo print_r( $axisLabels, TRUE );
+	echo "</pre>";
+	*/
+
+	return $values;
+
+}
+
+?>
