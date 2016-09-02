@@ -18,7 +18,7 @@ Laika fetches web analytics data for you and outputs interactive, customizable d
 
 ## Getting started
 
-- [Here's the instructions so you can get started with Laika](/docs/README.md).
+- [Here's the instructions so you can get started with Laika](https://github.com/gaelanlloyd/laika/wiki).
 
 ## WOOF!
 
