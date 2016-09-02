@@ -25,7 +25,7 @@
                 <li class="dropdown">
                 	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
                 	<ul class="dropdown-menu">
-                		<li><a href="https://github.com/gaelanlloyd/laika/tree/master/docs" target="_blank">Documentation</a></li>
+                		<li><a href="https://github.com/gaelanlloyd/laika/wiki" target="_blank">Documentation</a></li>
                 		<li role="separator" class="divider"></li>
                 		<li><a href="/about.php">About</a></li>
                 	</ul>
