@@ -11,6 +11,7 @@ if ( $argc < 3 ) {
 
 $CURRENT_HOST = $argv[1];
 $REPORT_DATE  = $argv[2];
+$FETCH_SITE   = $argv[3];
 
 $TENANT_URL   = "pack-members/";		// If this changes, also change it in [header.php]
 
@@ -30,6 +31,19 @@ if ( !file_exists($COLLAR) ) {
 if ( !validateDate($REPORT_DATE) ) {
 	echo "LAIKA: ERROR, the date parameter appears to be malformed: " . $REPORT_DATE . "\n";
 	exit;
+}
+
+// If provided, is the sites parameter properly formed?  Should be single integer.
+$SITE_MANUALLY_DEFINED = FALSE;
+
+if ( !empty($FETCH_SITE) ) {
+
+	$SITE_MANUALLY_DEFINED = TRUE;
+
+	if ( !is_numeric($FETCH_SITE) ) {
+		echo "LAIKA: ERROR, the site parameter appears to be malformed: " . $FETCH_SITE . "\n";
+		exit;
+	}
 }
 
 // --- LOAD COMMON ITEMS -------------------------------------------------------
@@ -103,12 +117,26 @@ try {
 // --- CHECK FOR ERRORS --------------------------------------------------------
 
 // Get the list of all sites that Laika will be fetching data for (that don't have [ignore = 1])
-$sites = $DATABASE->select($TBL_SITES , "*", [
-		"ignore[!]" => 1
-	]);
+
+if ( $SITE_MANUALLY_DEFINED ) {
+
+	$sites = $DATABASE->select($TBL_SITES , "*", [
+			"AND" => [
+				"ignore[!]" => 1,
+				"id" => $FETCH_SITE
+			]
+		]);
+
+} else {
+
+	$sites = $DATABASE->select($TBL_SITES , "*", [
+			"ignore[!]" => 1
+		]);
+
+}
 
 // DEBUG
-// Only look up certain sites (for faster testing)
+// Manual override, only look up data for certain sites (for faster testing)
 /*
 $sites = $DATABASE->select( $TBL_SITES , "*", [
 		"id" => 1
@@ -126,24 +154,64 @@ if ( strtotime($REPORT_DATE) > time() ) {
 }
 
 // Check for error: Are there sites actually defined?
-if ( empty($sites) ) {
-	writeText($GLOBALS['txtErrorNoSitesDefined'], TRUE);
-	exit;
+if ( $SITE_MANUALLY_DEFINED ) {
+
+	if ( empty($sites) ) {
+
+		$txtError = $GLOBALS['txtErrorSiteDoesNotExistA'];
+		$txtError .= " " . $FETCH_SITE . " ";
+		$txtError .= $GLOBALS['txtErrorSiteDoesNotExistB'];
+
+		writeText($txtError);
+		exit;
+
+	}
+
+} else {
+
+	if ( empty($sites) ) {
+		writeText($GLOBALS['txtErrorNoSitesDefined'], TRUE);
+		exit;
+	}
+
 }
 
 // Check for error: Is there already data for the month that we are fetching for?
 // If so, quit, because we don't want to overwrite anything or mess up the DB.
-$existingData = $DATABASE->select( $TBL_DATA, "*", [
-		"date" => $REPORT_DATE
-	]);
+// - If a site is specified, check data only for that site
+
+if ( $SITE_MANUALLY_DEFINED ) {
+
+	// A site was specified, so check for existing data in that site for that month
+	$existingData = $DATABASE->select( $TBL_DATA, "*", [
+			"AND" => [
+				"date" => $REPORT_DATE,
+				"site" => $FETCH_SITE
+			]
+		]);
+
+} else {
+
+	// No site was specified, so check for existing data in any site for that month
+	$existingData = $DATABASE->select( $TBL_DATA, "*", [
+			"date" => $REPORT_DATE
+		]);
+
+}
 
 if ( !empty($existingData) ) {
 
 	$txtError  = $GLOBALS['txtErrorDataAlreadyExistsA'];
-	$txtError .= " " . $CURRENT_HOST . " ";
+	$txtError .= " " . $CURRENT_HOST . ", ";
 	$txtError .= $GLOBALS['txtErrorDataAlreadyExistsB'];
-	$txtError .= " " . $REPORT_DATE . " ";
-	$txtError .= $GLOBALS['txtErrorDataAlreadyExistsC'];
+	$txtError .= " " . $REPORT_DATE . ", ";
+
+	if ( !empty($FETCH_SITE) ) {
+		$txtError .= $GLOBALS['txtErrorDataAlreadyExistsC'];
+		$txtError .= " " . $FETCH_SITE . ", ";
+	}
+
+	$txtError .= $GLOBALS['txtErrorDataAlreadyExistsD'];
 
 	writeText($txtError);
 	exit;
@@ -473,11 +541,34 @@ function writeFinalReport() {
 	global $DATABASE;
 	global $TBL_DATA;
 	global $REPORT_DATE;
+	global $SITE_MANUALLY_DEFINED;
+	global $FETCH_SITE;
 
 	// Write a final report in CSV format showing all of the data that was just added
-	$finalReport = $DATABASE->select($TBL_DATA, "*", [
-			"date" => $REPORT_DATE
-		]);
+
+	// Get the appropriate data
+
+	if ( $SITE_MANUALLY_DEFINED ) {
+
+		// If a site was manually defined, only show the data for that site
+		// Data could already exist in the DB for other sites, and outputting that is confusing
+
+		$finalReport = $DATABASE->select($TBL_DATA, "*", [
+				"AND" => [
+					"date" => $REPORT_DATE,
+					"site" => $FETCH_SITE
+				]
+			]);
+
+	} else {
+
+		// Show data for all sites for that date
+
+		$finalReport = $DATABASE->select($TBL_DATA, "*", [
+				"date" => $REPORT_DATE
+			]);
+
+	}
 
 	writeText($GLOBALS['txtFinalReport'], TRUE);
 

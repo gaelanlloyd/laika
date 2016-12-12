@@ -1,6 +1,7 @@
 <?php
 
 // DATE AND TIME FORMATS
+
 $formatFullDate = "Y-m-d H:i:s";
 $formatMinSec = "%i:%s";
 
@@ -39,8 +40,11 @@ $txtErrorNoDataInTBLMENUITEMS = "There doesn't appear to be any data in TBL_MENU
 $txtErrorDateNotDefined = "ERROR - Date was not defined.  Aborting operation.";
 $txtErrorNoSitesDefined = "ERROR - No sites are defined.  Aborting operation.";
 $txtErrorDataAlreadyExistsA = "ERROR - Data for pack member";
-$txtErrorDataAlreadyExistsB = "for time period";
-$txtErrorDataAlreadyExistsC = "already exists in the database.  Aborting operation.";
+$txtErrorDataAlreadyExistsB = "time period";
+$txtErrorDataAlreadyExistsC = "site";
+$txtErrorDataAlreadyExistsD = "already exists in the database.  Aborting operation.";
+$txtErrorSiteDoesNotExistA = "ERROR - Site ID";
+$txtErrorSiteDoesNotExistB = "does not exist.";
 $txtErrorFutureDataA = "ERROR - Data for";
 $txtErrorFutureDataB = "is in the future.  Aborting operation.";
 $txtErrorGetValueFailedA = "ERROR - getValue(";
