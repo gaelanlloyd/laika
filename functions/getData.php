@@ -70,27 +70,46 @@ function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternate
 
 	$currentDate = strtotime($maxDate . ' 01:00:00');
 
-	// Get the month number
+	// Get the current month number
 	$thisMonth = date("m", $currentDate);
+
+	// Get the current year
+	$thisYear = date("Y", $currentDate);
+
+	// Create a string to represent the current YYYY-MM-01 notation
+	// used to calculate the past months that need to be retreived
+	$strStartTime = $thisYear . "-" . $thisMonth . "-01";
+
 
 	// The report's end date (based on max TBL_DATA date)
 	$dateToday = date("Y-m-d", $currentDate);
 
 	// The report's starting date
 	// - Subtract NUM_MONTHS from the first day of the current month
-	$dateStart = date("Y-m-d",strtotime("$thisMonth/1 -$NUM_MONTHS months"));
+	// $dateStart = date("Y-m-d",strtotime("$thisMonth/1 -$NUM_MONTHS months"));
+
+	$dateStart = date("Y-m-d",strtotime("$strStartTime -$NUM_MONTHS months"));
 
 	// Get the list of months the data should be pulled for
 	$theseMonths = array();
 
 	for ( $i = $NUM_MONTHS - 1; $i >= 0; $i-- ) {
-		$theseMonths[] = date("Y-m-d",strtotime("$thisMonth/1 -$i months"));
+		$theseMonths[] = date("Y-m-d",strtotime("$strStartTime -$i months"));
 	}
 
 	// DEBUG
 	/*
-	echo "<pre>date start = " . $dateStart . "\n";
-	echo "date end = " . $dateToday . "</pre>";
+	echo "<pre>";
+	echo "maxDate      = " . $maxDate . "\n";
+	echo "NUM_MONTHS   = " . $NUM_MONTHS . "\n";
+	echo "currentDate  = " . $currentDate . "\n";
+	echo "strStartTime = " . $strStartTime . "\n";
+	echo "thisMonth    = " . $thisMonth . "\n";
+	echo "thisYear     = " . $thisYear . "\n";
+	echo "dateToday    = " . $dateToday . "\n";
+	echo "dateStart    = " . $dateStart . "\n";
+	echo "dateEnd      = " . $dateToday;
+	echo "</pre>";
 
 	echo "<pre>theseMonths = \n";
 	echo print_r( $theseMonths );
