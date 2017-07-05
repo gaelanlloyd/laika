@@ -63,7 +63,7 @@ if ( empty($NUM_MONTHS) ) {
 }
 
 // This array controls the "Show months" filter
-$FILTER_MONTHS = array( 3, 6, 9, 12, 15 );
+$FILTER_MONTHS = array( 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 36 );
 
 // --- DATABASE CONNECTION -----------------------------------------------------
 
