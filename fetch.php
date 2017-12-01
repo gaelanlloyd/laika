@@ -9,9 +9,9 @@ if ( $argc < 3 ) {
 	exit;
 }
 
-$CURRENT_HOST = $argv[1];
-$REPORT_DATE  = $argv[2];
-$FETCH_SITE   = $argv[3];
+if ( isset( $argv[1] ) ) { $CURRENT_HOST = $argv[1]; }
+if ( isset( $argv[2] ) ) { $REPORT_DATE  = $argv[2]; }
+if ( isset( $argv[3] ) ) { $FETCH_SITE   = $argv[3]; }
 
 $TENANT_URL   = "pack-members/";		// If this changes, also change it in [header.php]
 
