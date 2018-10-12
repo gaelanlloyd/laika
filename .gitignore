@@ -1,0 +1,3 @@
+# Ignore pack-members data, except the built-in one
+pack-members/*
+!pack-members/demo.golaika.com
