@@ -1,6 +1,11 @@
 <?php
 
-// Dashboard interface needs these variables defined
+// --- ENABLE DEBUGGING OUTPUT -------------------------------------------------
+
+$DEBUG_ENABLE = TRUE;
+
+
+// --- DASHBOARD INTERFACE VARIABLES -------------------------------------------
 
 $CURRENT_HOST = $_SERVER['HTTP_HOST'];		// Used to determine which client to show data for
 											// Should be similar to laika.winshuttle.com
@@ -13,6 +18,7 @@ $TENANT_PATH  = "pack-members/";			// If this changes, also change it in [fetch.
 // Include the additional common items
 include('common.php');
 
+
 // --- GET URL PARAMETERS ------------------------------------------------------
 
 $REPORT_ID  = filter_input(INPUT_GET, 'r', FILTER_SANITIZE_STRING);
@@ -21,6 +27,7 @@ $NUM_MONTHS = filter_input(INPUT_GET, 'm', FILTER_SANITIZE_NUMBER_INT);
 // DEBUG
 // $CURRENT_HOST = "demo.golaika.com";		// MANUAL OVERRIDE FOR TESTING
 // ini_set('display_errors', 'On');
+
 
 // --- CHECK FOR TENANT --------------------------------------------------------
 
@@ -34,6 +41,7 @@ if ( file_exists($thisCollar) ) {
 	echo "ERROR - COLLAR.PHP not found for " . $CURRENT_HOST;
 	exit;
 }
+
 
 // --- LOAD FUNCTIONS ----------------------------------------------------------
 
@@ -55,6 +63,7 @@ foreach ( $loadFile as $file ) {
 	require $file;
 }
 
+
 // --- FILTERS -----------------------------------------------------------------
 
 // If NUM_MONTHS URL param was not specified, set to the default maximum value
@@ -64,6 +73,7 @@ if ( empty($NUM_MONTHS) ) {
 
 // This array controls the "Show months" filter
 $FILTER_MONTHS = array( 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 36 );
+
 
 // --- DATABASE CONNECTION -----------------------------------------------------
 
@@ -94,6 +104,7 @@ try {
 
 }
 
+
 // --- VERIFY DATABASE DATA EXISTS ---------------------------------------------
 
 // Ensure there's tables with data in the database
@@ -112,6 +123,7 @@ if ( $dbTestCount == 0 ) { terminate($GLOBALS['txtErrorNoDataInTBLMENUGROUPS']);
 
 $dbTestCount = $DATABASE->count($TBL_MENU_ITEMS, ["LIMIT" => 1]);
 if ( $dbTestCount == 0 ) { terminate($GLOBALS['txtErrorNoDataInTBLMENUITEMS']); }
+
 
 // -----------------------------------------------------------------------------
 

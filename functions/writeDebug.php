@@ -2,13 +2,13 @@
 
 function writeDebug() {
 
-	global $DEBUG;
+	global $DEBUG_ENABLE;
 	global $DATABASE;
 	global $TBL_SITES;
 	global $TBL_METRICS;
 
 	// If debugging is disabled, exit
-	if (!$DEBUG) { return; }
+	if (!$DEBUG_ENABLE) { return; }
 
 	// Enable PHP debugging
 	ini_set('display_errors', 'On');
