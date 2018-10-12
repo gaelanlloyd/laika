@@ -13,6 +13,8 @@ $txtViewDataTable = "Toggle data table and CSV";
 $txtDataTableHeader = "Data table";
 $txtCSVHeader = "CSV";
 $txtCSVInstructions = "Copy and paste this into a plain text file to create a CSV of the chart data.";
+$txtPivotHeader = "Pivot table data";
+$txtPivotInstructions = "This data can be used to generate a pivot table.";
 $txtNoDataWasProvided = "No data was provided";
 $txtErrorTooMuchData = "Too much data (more than 7 series)";
 $txtErrorListNotDefined = "Error list not defined";
@@ -62,5 +64,8 @@ $txtGoalNoData = "No data for this goal, will mark as zero";
 $txtSite = "Site";
 $txtGANProfileID = "GAN Profile ID";
 $txtGoalID = "Goal ID";
+
+$txtSessions = "Sessions";
+$txtDate = "Date";
 
 ?>

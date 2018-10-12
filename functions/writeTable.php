@@ -111,12 +111,17 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
         $out .= "</table>";
         $out .= "</div>";
 
+        // --- CSV -------------------------------------------------------------
+
+        $out .= "<div class=\"row\">";
+        $out .= "<div class=\"col-md-6\">";
+
         $out .= "<h3>" . $GLOBALS['txtCSVHeader'] . "</h3>";
         $out .= "<p>" . $GLOBALS['txtCSVInstructions'] . "</p>";
 
         $out .= "<pre class=\"addMarginBottom\">";
 
-        $out .= "date,";
+        $out .= $GLOBALS['txtDate'] . ",";
 
         foreach ($chartSeriesLabels as $key => $dataLabelItem) {
             $out .= $dataLabelItem . ',';
@@ -147,6 +152,48 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
         }
 
         $out .= "</pre>";
+        $out .= "</div>";
+
+        // --- Pivot -----------------------------------------------------------
+
+        $out .= "<div class=\"col-md-6\">";
+
+        $out .= "<h3>" . $GLOBALS['txtPivotHeader'] . "</h3>";
+        $out .= "<p>" . $GLOBALS['txtPivotInstructions'] . "</p>";
+
+        $out .= "<pre class=\"addMarginBottom\">";
+
+        $out .= $GLOBALS['txtDate'] . "\t" . $GLOBALS['txtSite'] . "\t" . $GLOBALS['txtSessions'];
+
+        $out .= "\n";
+
+        $temp = array();
+
+        $cd = 0;
+
+        foreach ( $chartData as $siteData ) {
+            $sd = 0;
+            foreach ( $siteData as $siteMonthData ) {
+                $temp[] = $chartAxisLabels[$sd] . "\t" . $chartSeriesLabels[$cd] . "\t" . $siteMonthData . "\n";
+                $sd++;
+            }
+            $cd++;
+        }
+
+        asort( $temp );
+
+        foreach ( $temp as $t ) {
+            $out .= $t;
+        }
+
+
+        $out .= "</pre>";
+        $out .= "</div>";
+
+        $out .= "</div>";
+
+        // ---------------------------------------------------------------------
+
         $out .= "</div>";
 
     }
