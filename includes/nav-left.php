@@ -21,7 +21,9 @@ foreach ($navGroups as $navGroup) {
 	);
 
 	foreach ($navItems as $navItem) {
-		echo writeSidebarNavItem( $navItem["menu_item_title"], "/?r=" . $navItem["id"] );
+		if ( 1 != $navItem['hidden'] ) {
+			echo writeSidebarNavItem( $navItem["menu_item_title"], "/?r=" . $navItem["id"] );
+		}
 	}
 
 	?>
