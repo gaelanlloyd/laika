@@ -86,5 +86,3 @@ function writeReport($reportData, $customTitle = NULL, $chartCaption = NULL, $si
     }
 
 }
-
-?>

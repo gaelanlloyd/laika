@@ -201,5 +201,3 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
     return $out;
 
 }
-
-?>

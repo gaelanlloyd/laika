@@ -31,5 +31,3 @@ foreach ($navGroups as $navGroup) {
 	<?php
 
 }
-
-?>

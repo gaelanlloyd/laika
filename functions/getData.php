@@ -246,5 +246,3 @@ function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternate
 	return $values;
 
 }
-
-?>

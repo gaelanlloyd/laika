@@ -11,5 +11,3 @@ function writeChartDefaults() {
 
     return $out;
 }
-
-?>

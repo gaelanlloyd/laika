@@ -27,5 +27,3 @@ function terminate($failureTextA, $failureTextB = NULL) {
     <?php exit;
 
 }
-
-?>

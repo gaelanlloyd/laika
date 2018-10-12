@@ -113,5 +113,3 @@ function getColor($name, $id) {
     return ${$name}[$id];
 
 }
-
-?>

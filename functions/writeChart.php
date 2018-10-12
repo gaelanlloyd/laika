@@ -123,5 +123,3 @@ function writeChart($chartID, $chartType, $chartData, $chartSeriesLabels, $chart
     return $out;
 
 }
-
-?>

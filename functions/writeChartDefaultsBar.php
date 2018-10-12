@@ -32,5 +32,3 @@ function writeChartDefaultsBar() {
     return $out;
 
 }
-
-?>

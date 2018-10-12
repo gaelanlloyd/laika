@@ -6,5 +6,3 @@ function doReport($reportItem) {
 	echo writeReport($reportData);
 
 }
-
-?>

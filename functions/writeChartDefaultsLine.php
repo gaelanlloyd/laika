@@ -35,5 +35,3 @@ function writeChartDefaultsLine() {
     return $out;
 
 }
-
-?>

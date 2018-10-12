@@ -43,5 +43,3 @@ function writeReportItem($chartTitle, $chartType, $chartData, $chartSeriesLabels
 	return $out;
 
 }
-
-?>

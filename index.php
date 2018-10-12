@@ -56,5 +56,3 @@ if ( !empty($reportHeader) ) { ?>
 eval($reportData);
 
 include('includes/footer.php');
-
-?>

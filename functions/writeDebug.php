@@ -72,5 +72,3 @@ function writeDebug() {
 	return $out;
 
 }
-
-?>

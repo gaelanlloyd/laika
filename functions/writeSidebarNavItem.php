@@ -58,5 +58,3 @@ function writeSidebarNavItem($pageTitle, $pageURL) {
 
     return $out;
 }
-
-?>

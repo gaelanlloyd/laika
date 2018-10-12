@@ -22,5 +22,3 @@ function writeError($procedure, $errorList) {
     return $out;
 
 }
-
-?>

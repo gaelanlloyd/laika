@@ -20,5 +20,3 @@ function isDevSite() {
 	return $isDEV;
 
 }
-
-?>
