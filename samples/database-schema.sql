@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `menu_groups` (
 CREATE TABLE IF NOT EXISTS `menu_items` (
 `id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
+  `hidden` tinyint(1) NOT NULL,
   `menu_item_title` tinytext NOT NULL,
   `report_layout` text NOT NULL,
   `report_header` tinytext NOT NULL,
