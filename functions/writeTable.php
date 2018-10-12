@@ -2,6 +2,8 @@
 
 function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
 
+    ob_start();
+
     // EXPECTS DATA IN THIS FORMAT
 
     // $chartData = array(
@@ -27,7 +29,8 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
     // -------------------------------------------------------------------------
 
     if ( $error ) {
-        $out .= writeError( __FUNCTION__ , $errorList );
+        echo writeError( __FUNCTION__ , $errorList );
+        $out = ob_get_clean();
         return $out;
     }
 
@@ -35,36 +38,40 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
 
     // WRITE THE DATA TABLE
 
-    $out = "";
-
     if ( empty($chartData) ) {
 
-    	$out .= "<p>" . $GLOBALS['txtNoDataWasProvided'] . "</p>";
+    	?><p><?php echo $GLOBALS['txtNoDataWasProvided']; ?></p><?php
 
     } else {
 
         // --- Write legend ----------------------------------------------------
 
-        $out .= "<div class=\"legend clearfix\">";
-        $out .= "<table><tbody><tr>";
+        ?>
+        <div class="legend clearfix">
+        <table><tbody><tr>
 
-        foreach ($chartSeriesLabels as $key => $dataLabelItem) {
-            $out .= "<td class=\"series\">";
-            $out .= "<div class=\"indicator\" style=\"background-color: " . getColor("strokeColor", $key) . ";\"></div>";
-            $out .= $dataLabelItem;
-            $out .= "</td>";
-        }
+        <?php
+        foreach ($chartSeriesLabels as $key => $dataLabelItem) { ?>
+            <td class="series">
+            <div class="indicator" style="background-color: <?php echo getColor("strokeColor", $key); ?>;"></div>
+            <?php echo $dataLabelItem; ?>
+            </td>
+        <?php } ?>
 
-        $out .= "</tr></tbody></table>";
-        $out .= "</div>";
+        </tr></tbody></table>
+        </div>
+
+        <?php
 
         // --- Write table toggler button --------------------------------------
 
-        $out .= "<p class=\"text-center\">";
-        $out .= "<a href=\"javascript:void(0)\" class=\"toggler btn btn-default\">";
-        $out .= $GLOBALS['txtViewDataTable'];
-        $out .= "</a>";
-        $out .= "</p>";
+        ?>
+        <p class="text-center">
+        <a href="javascript:void(0)" class="toggler btn btn-default">
+        <?php echo $GLOBALS['txtViewDataTable']; ?>
+        </a>
+        </p>
+        <?php
 
         // --- Write table -----------------------------------------------------
 
@@ -74,103 +81,114 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
         echo print_r( $chartData );
         echo "</pre>";
         */
+        ?>
 
-        $out .= "<div class=\"dataTable\" style=\"display: none;\">";
+        <div class="dataTable" style="display: none;">
 
-        $out .= "<div class=\"table-responsive addMarginBottom\">";
-        $out .= "<table class=\"table table-striped\">";
-        $out .= "<thead>";
-        $out .= "<tr>";
-        $out .= "<th></th>";
+        <div class="table-responsive addMarginBottom">
+        <table class="table table-striped">
+        <thead>
+        <tr>
+        <th></th>
 
-        foreach ($chartSeriesLabels as $key => $dataLabelItem) {
-            $out .= "<th>";
-            $out .= "<div class=\"indicator\" style=\"background-color: " . getColor("strokeColor", $key) . ";\"></div>";
-            $out .= $dataLabelItem;
-            $out .= "</th>";
-        }
+        <?php
+        foreach ($chartSeriesLabels as $key => $dataLabelItem) { ?>
+            <th>
+            <div class="indicator" style="background-color: <?php echo getColor("strokeColor", $key); ?>"></div>
+            $dataLabelItem;
+            </th>
+        <?php } ?>
 
-        $out .= "</tr>";
-        $out .= "</thead>";
-	    $out .= "<tbody>";
+        </tr>
+        </thead>
+	    <tbody>
 
-        foreach ($chartAxisLabels as $keyAxisLabel => $itemAxisLabel) {
+        <?php
+        foreach ($chartAxisLabels as $keyAxisLabel => $itemAxisLabel) { ?>
 
-            $out .= "<tr>";
-            $out .= "<th>" . $itemAxisLabel . "</th>";
+            <tr>
+            <th><?php echo $itemAxisLabel; ?></th>
 
+            <?php
             // For each chartData item, which are measurements
-            foreach ($chartData as $keyChartData => $chartDataItem) {
-                $out .= "<td>" . $chartData[$keyChartData][$itemAxisLabel] . "</td>";
-            }
+            foreach ($chartData as $keyChartData => $chartDataItem) { ?>
+                <td><?php echo $chartData[$keyChartData][$itemAxisLabel]; ?></td>
+            <?php } ?>
 
-            $out .= "</tr>";
-        }
+            </tr>
 
-        $out .= "</tbody>";
-        $out .= "</table>";
-        $out .= "</div>";
+        <?php } ?>
 
+        </tbody>
+        </table>
+        </div>
+
+        <?php
         // --- CSV -------------------------------------------------------------
+        ?>
 
-        $out .= "<div class=\"row\">";
-        $out .= "<div class=\"col-md-6\">";
+        <div class="row">
+        <div class="col-md-6">
 
-        $out .= "<h3>" . $GLOBALS['txtCSVHeader'] . "</h3>";
-        $out .= "<p>" . $GLOBALS['txtCSVInstructions'] . "</p>";
+        <h3><?php echo $GLOBALS['txtCSVHeader']; ?></h3>
+        <p><?php echo $GLOBALS['txtCSVInstructions']; ?></p>
 
-        $out .= "<pre class=\"addMarginBottom\">";
+        <pre class="addMarginBottom"><?php echo $GLOBALS['txtDate'] . ","; ?>
 
-        $out .= $GLOBALS['txtDate'] . ",";
+        <?php
 
         foreach ($chartSeriesLabels as $key => $dataLabelItem) {
-            $out .= $dataLabelItem . ',';
+            echo $dataLabelItem . ",";
         }
 
-        $out .= "\n";
+        echo "\n";
 
         foreach ($chartAxisLabels as $keyAxisLabel => $itemAxisLabel) {
 
-            $out .= $itemAxisLabel . ",";
+            echo $itemAxisLabel . ",";
 
             $i = 0;
             $maxChartDataItems = count( $chartData ) - 1;
 
             // For each chartData item, which are measurements
             foreach ($chartData as $keyChartData => $chartDataItem) {
-                $out .= $chartData[$keyChartData][$itemAxisLabel];
+                echo $chartData[$keyChartData][$itemAxisLabel];
 
                 // if this isn't the last item, add a comma
                 if ($i != $maxChartDataItems) {
-                    $out .= ",";
+                    echo ",";
                 }
 
                 $i++;
             }
 
-            $out .= "\n";
+            echo "\n";
         }
+        ?>
 
-        $out .= "</pre>";
-        $out .= "</div>";
+        </pre>
+        </div>
 
+        <?php
         // --- Pivot -----------------------------------------------------------
+        ?>
 
-        $out .= "<div class=\"col-md-6\">";
+        <div class="col-md-6">
 
-        $out .= "<h3>" . $GLOBALS['txtPivotHeader'] . "</h3>";
-        $out .= "<p>" . $GLOBALS['txtPivotInstructions'] . "</p>";
+        <h3><?php echo $GLOBALS['txtPivotHeader']; ?></h3>
+        <p><?php echo $GLOBALS['txtPivotInstructions']; ?></p>
 
-        $out .= "<pre class=\"addMarginBottom\">";
+        <pre class="addMarginBottom">
 
-        $out .= $GLOBALS['txtDate'] . "\t" . $GLOBALS['txtSite'] . "\t" . $GLOBALS['txtSessions'];
+        <?php
 
-        $out .= "\n";
+        echo $GLOBALS['txtDate'] . "\t";
+        echo $GLOBALS['txtSite'] . "\t";
+        echo $GLOBALS['txtSessions'] . "\n";
 
         $temp = array();
 
         $cd = 0;
-
         foreach ( $chartData as $siteData ) {
             $sd = 0;
             foreach ( $siteData as $siteMonthData ) {
@@ -183,21 +201,24 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
         asort( $temp );
 
         foreach ( $temp as $t ) {
-            $out .= $t;
+            echo $t;
         }
+        ?>
 
+        </pre>
+        </div>
 
-        $out .= "</pre>";
-        $out .= "</div>";
+        </div>
 
-        $out .= "</div>";
-
+        <?php
         // ---------------------------------------------------------------------
+        ?>
 
-        $out .= "</div>";
+        </div>
 
-    }
+    <?php }
 
+    $out = ob_get_clean();
     return $out;
 
 }

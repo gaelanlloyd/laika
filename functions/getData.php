@@ -27,8 +27,6 @@ function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternate
     // -------------------------------------------------------------------------
     // CHECK FOR ERRORS
 
-    $out = "";
-
     $error = FALSE;
     $errorList = array();
 
@@ -42,7 +40,9 @@ function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternate
     // -------------------------------------------------------------------------
 
     if ($error) {
-        $out .= writeError( __FUNCTION__ , $errorList );
+		ob_start();
+        echo writeError( __FUNCTION__ , $errorList );
+        $out = ob_get_clean();
         return $out;
     }
 

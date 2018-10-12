@@ -2,7 +2,7 @@
 
 function writeReportItem($chartTitle, $chartType, $chartData, $chartSeriesLabels, $chartAxisLabels, $chartCaption) {
 
-	$out = '';
+	ob_start();
 
 	// generate a unique name for the canvas
 
@@ -17,29 +17,31 @@ function writeReportItem($chartTitle, $chartType, $chartData, $chartSeriesLabels
 	$canvasName = $canvasName . '-' . rand(1000,9999);		// add random numbers
 	$canvasName = $canvasName . '-' . uniqid();				// add a uniqid to help avoid collisions
 
-	$out .= '<h2 class="chartTitle">';
-	$out .= $chartTitle;
-	$out .= '</h2>';
+	?><h2 class="chartTitle"><?php echo $chartTitle; ?></h2><?php
 
 	// if there is a report caption, write it
 	if ( !empty($chartCaption) ) {
-		$out .= '<p>';
-		$out .= $chartCaption;
-		$out .= '</p>';
+		?><p><?php echo $chartCaption; ?></p><?php
 	}
 
 	// DEBUG
-	// $out .= '<pre>Canvas name = [' . $canvasName . ']</pre>';
+	// echo '<pre>Canvas name = [' . $canvasName . ']</pre>';
 
-	$out .= '<div class="reportItem">';
+	?>
+	<div class="reportItem">
+	<?php
 
-	$out .= writeChart($canvasName, $chartType, $chartData, $chartSeriesLabels, $chartAxisLabels);
-	$out .= writeTable($chartData, $chartSeriesLabels, $chartAxisLabels);
+	echo writeChart($canvasName, $chartType, $chartData, $chartSeriesLabels, $chartAxisLabels);
+	echo writeTable($chartData, $chartSeriesLabels, $chartAxisLabels);
 
-	$out .= '</div>';
+	?>
+	</div>
 
-	$out .= '<hr>';
+	<hr>
 
+	<?php
+
+	$out = ob_get_clean();
 	return $out;
 
 }

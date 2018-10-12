@@ -2,23 +2,26 @@
 
 function writeError($procedure, $errorList) {
 
-    $out = "";
+    // Use echoes on this output so that the <pre> output is nicely formatted
+
+    ob_start();
 
     if (empty($errorList)) {
         $errorList = "<li>" . $GLOBALS['txtErrorListNotDefined'] . "</li>";
     }
 
-    $out .= "<pre class=\"error\"><strong>ERROR: ". $procedure . "</strong>";
-    $out .= "\n";
-    $out .= "<ul>";
+    echo "<pre class=\"error\">";
+    echo "<strong>ERROR: " . $procedure . "</strong>";
+    echo "<ul>";
 
     foreach ($errorList as $errorListItem) {
-        $out .= "<li>" . $errorListItem . "</li>";
+        echo "<li>" . $errorListItem . "</li>";
     }
 
-    $out .= "</ul>";
-    $out .= "</pre>";
+    echo "</ul>";
+    echo "</pre>";
 
+    $out = ob_get_clean();
     return $out;
 
 }

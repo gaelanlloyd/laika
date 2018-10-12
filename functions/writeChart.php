@@ -2,6 +2,8 @@
 
 function writeChart($chartID, $chartType, $chartData, $chartSeriesLabels, $chartAxisLabels) {
 
+    ob_start();
+
     // EXPECTS DATA IN THIS FORMAT
 
     // $chartID = "UniqueIDForChart"
@@ -14,8 +16,6 @@ function writeChart($chartID, $chartType, $chartData, $chartSeriesLabels, $chart
     // $chartSeriesLabels = array( "Series 1", "Series 2");
 
     // $chartAxisLabels = array( "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" );
-
-    $out = "";
 
     // -------------------------------------------------------------------------
     // CHECK FOR ERRORS
@@ -44,25 +44,20 @@ function writeChart($chartID, $chartType, $chartData, $chartSeriesLabels, $chart
     // -------------------------------------------------------------------------
 
     if ($error) {
-        $out .= writeError( __FUNCTION__ , $errorList );
+        echo writeError( __FUNCTION__ , $errorList );
+        $out = ob_get_clean();
         return $out;
     }
 
     // -------------------------------------------------------------------------
 
-    $out .= "<div class=\"reportChart\">";
-    $out .= "<canvas id=\"" . $chartID . "\"></canvas>";
-    $out .= "</div>";
+    ?>
 
-    $out .= "<script>";
-    $out .= writeChartDefaults();
+    <div class="reportChart">
+        <canvas id="<?php echo $chartID; ?>"></canvas>
+    </div>
 
-    $out .= "var ctx = document.getElementById(\"" . $chartID . "\").getContext(\"2d\");";
-
-    // WRITE CHART DATA
-    $out .= "var data = {";
-    $out .= "labels: [\"" . implode("\",\"", $chartAxisLabels) . "\"],";
-    $out .= "datasets: [";
+    <?php
 
     // DEBUG
     /*
@@ -74,6 +69,10 @@ function writeChart($chartID, $chartType, $chartData, $chartSeriesLabels, $chart
     echo print_r( $chartSeriesLabels );
     echo "</pre>";
     */
+
+    $labels = implode(',', $chartAxisLabels);
+
+    $ds = "";
 
     // For each series
     // foreach ( $chartSeriesLabels as $key => $dataLabel ) {
@@ -88,38 +87,58 @@ function writeChart($chartID, $chartType, $chartData, $chartSeriesLabels, $chart
         echo "</pre>";
         */
 
-        $out .= "{";
-        $out .= "label: \""                . $chartSeriesLabels[$i]              . "\",";
-        $out .= "fillColor: \""            . getColor("fillColor",$i)            . "\",";
-        $out .= "strokeColor: \""          . getColor("strokeColor",$i)          . "\",";
-        $out .= "pointColor: \""           . getColor("pointColor",$i)           . "\",";
-        $out .= "pointStrokeColor: \""     . getColor("pointStrokeColor",$i)     . "\",";
-        $out .= "pointHighlightFill: \""   . getColor("pointHighlightFill",$i)   . "\",";
-        $out .= "pointHighlightStroke: \"" . getColor("pointHighlightStroke",$i) . "\",";
-        $out .= "data: ["                  . implode( ",", $chartData[$key])     . "]";
-        $out .= "},";
+        $ds .= "{";
+        $ds .= "label: \""                . $chartSeriesLabels[$i]              . "\",";
+        $ds .= "fillColor: \""            . getColor("fillColor",$i)            . "\",";
+        $ds .= "strokeColor: \""          . getColor("strokeColor",$i)          . "\",";
+        $ds .= "pointColor: \""           . getColor("pointColor",$i)           . "\",";
+        $ds .= "pointStrokeColor: \""     . getColor("pointStrokeColor",$i)     . "\",";
+        $ds .= "pointHighlightFill: \""   . getColor("pointHighlightFill",$i)   . "\",";
+        $ds .= "pointHighlightStroke: \"" . getColor("pointHighlightStroke",$i) . "\",";
+        $ds .= "data: ["                  . implode( ",", $chartData[$key])     . "]";
+        $ds .= "},";
 
         $i++;
 
     }
 
-    $out .= "]";
-    $out .= "};";
-
     switch ($chartType) {
+
         case "bar";
-            $out .= writeChartDefaultsBar();
-            $out .= "var myLineChart = new Chart(ctx).Bar(data, options);";
+            $defaults = writeChartDefaultsBar();
+            $chart = "var myLineChart = new Chart(ctx).Bar(data, options);";
         break;
 
         case "line";
-            $out .= writeChartDefaultsLine();
-            $out .= "var myLineChart = new Chart(ctx).Line(data, options);";
+            $defaults = writeChartDefaultsLine();
+            $chart = "var myLineChart = new Chart(ctx).Line(data, options);";
         break;
+
     }
 
-    $out .= "</script>";
+    ?>
 
+    <script>
+
+        <?php echo writeChartDefaults(); ?>
+        var ctx = document.getElementById("<?php echo $chartID; ?>").getContext("2d");
+
+        // WRITE CHART DATA
+        var data = {
+            labels: [<?php echo $labels; ?>],
+            datasets: [<?php echo $ds; ?>]
+        };
+
+        <?php
+            echo $defaults;
+            echo $chart;
+        ?>
+
+    </script>
+
+    <?php
+
+    $out = ob_get_clean();
     return $out;
 
 }

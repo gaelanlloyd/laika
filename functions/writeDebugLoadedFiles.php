@@ -4,18 +4,19 @@ function writeDebugLoadedFiles() {
 
 	global $loadFile;
 
-	$out = "";
+	ob_start();
 
-	$out .= "<h5>" . $GLOBALS['txtLoadedFiles'] . "</h5>";
-	$out .= "<pre>";
+	echo "<h5>" . $GLOBALS['txtLoadedFiles'] . "</h5>";
+	echo "<pre>";
 
 	foreach ($loadFile as $file) {
-		$out .= $file;
-		$out .= "\n";
+		echo $file;
+		echo "\n";
 	}
 
-	$out .= "</pre>";
+	echo "</pre>";
 
+	$out = ob_get_clean();
 	return $out;
 
 }

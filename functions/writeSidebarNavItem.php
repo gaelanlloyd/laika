@@ -6,7 +6,7 @@ function writeSidebarNavItem($pageTitle, $pageURL) {
     global $NUM_MONTHS;
     global $MAX_MONTHS;
 
-    $out = "";
+    ob_start();
 
     // --- ADJUST URL TO INCLUDE FILTER PARAMS ---------------------------------
 
@@ -35,26 +35,29 @@ function writeSidebarNavItem($pageTitle, $pageURL) {
 
     // --- WRITE THE NAV ITEM --------------------------------------------------
 
+    $class = "";
+
     if ($isCurrentPage) {
-        $out .= "<li class=\"active\">";
-    } else {
-        $out .= "<li>";
+        $class = "active";
     }
+
+    echo '<li class="' . $class . '">';
 
     if (empty($pageURL)) {
-        $out .= "<a href=\"javascript:void(0)\" class=\"disabled\">";
+        echo '<a href="javascript:void(0);" class="disabled">';
     } else {
-        $out .= "<a href=\"" . $pageURL . "\">";
+        echo '<a href="' . $pageURL . '">';
     }
 
-    $out .= $pageTitle;
+    echo $pageTitle;
 
     if ($isCurrentPage) {
-        $out .= "<span class=\"sr-only\">(current)</span>";
+        echo '<span class="sr-only">(current)</span>';
     }
 
-    $out .= "</a>";
-    $out .= "</li>";
+    echo "</a>";
+    echo "</li>";
 
+    $out = ob_get_clean();
     return $out;
 }

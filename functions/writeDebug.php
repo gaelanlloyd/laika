@@ -14,61 +14,78 @@ function writeDebug() {
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
 
-	$out = "";
+	ob_start();
 
-	$out .= "<hr>";
-	$out .= "<div class=\"well debug\">";
-	$out .= "<p class=\"mt0 pull-right\">" . $GLOBALS['txtLaikaDebuggerConsole'] . "</p>";
-	// $out .= "<pre>" . $GLOBALS['txtDebuggingEnabled'] . "</pre>";
+	?>
 
-	// --- RUN DEBUGGING FUNCTIONS ---------------------------------------------
-	$out .= "<h3 class=\"mt0\">System</h3>";
-	$out .= writeDebugLoadedFiles();
+	<div class="well debug">
+	<p class="mt0 pull-right"><?php echo $GLOBALS['txtLaikaDebuggerConsole']; ?></p>
+	<!--<pre><?php echo $GLOBALS['txtDebuggingEnabled']; ?></pre>-->
 
-	// --- TEST DATABASE RETRIEVAL ---------------------------------------------
+	<?php // --- RUN DEBUGGING FUNCTIONS ------------------------------------ ?>
 
-	$out .= "<h3>Database</h3>";
+	<h3 class="mt0">System</h3>
+	<?php echo writeDebugLoadedFiles(); ?>
 
-	// --- List all [sites] ----------------------------------------------------
 
-	$datas = $DATABASE->select($TBL_SITES, "*");
+	<?php // --- TEST DATABASE RETRIEVAL ------------------------------------ ?>
 
-	$out .= "<h5>DB: Sites (" . count($datas) . ")</h5>";
+	<h3>Database</h3>
 
-	$out .= "<pre>";
 
-	foreach ($datas as $data) {
-		$out .= $data["id"] . " --> " . $data["name"] . "<br/>";
-	}
+	<?php // --- List all [sites] ------------------------------------------- ?>
 
-	$out .= "</pre>";
+	<?php
+		$datas = $DATABASE->select($TBL_SITES, "*");
+	?>
 
-	// --- List all [itemnames] ------------------------------------------------
+	<h5>DB: Sites (<?php echo count($datas); ?>)</h5>
 
-	$datas = $DATABASE->select($TBL_METRICS, "*");
-
-	$out .= "<h5>DB: Metrics (" . count($datas) . ")</h5>";
-
-	$out .= "<pre>";
+	<pre><?php
 
 	foreach ($datas as $data) {
-		$out .= $data["id"] . " --> " . $data["name"] . "<br/>";
+		echo $data["id"] . " --> " . $data["name"] . "<br/>";
 	}
 
-	$out .= "</pre>";
+	?></pre>
 
-	// -------------------------------------------------------------------------
 
-	$myData = getData("1");
+	<?php // --- List all [itemnames] --------------------------------------- ?>
 
-	$out .= "<pre>MyData:\n\n";
-	$out .= print_r( $myData, TRUE );
-	$out .= "</pre>";
+	<?php
+		$datas = $DATABASE->select($TBL_METRICS, "*");
+	?>
 
-	// -------------------------------------------------------------------------
+	<h5>DB: Metrics (<?php echo count($datas); ?>)</h5>
 
-	$out .= "</div>";
+	<pre><?php
 
+	foreach ($datas as $data) {
+		echo $data["id"] . " --> " . $data["name"] . "<br/>";
+	}
+
+	?></pre>
+
+
+	<?php // ---------------------------------------------------------------- ?>
+
+	<?php
+		$myData = getData("1");
+
+		echo "<pre>MyData:\n\n";
+
+		print_r( $myData );
+
+		echo "</pre>";
+	?>
+
+	<?php // ---------------------------------------------------------------- ?>
+
+	</div>
+
+	<?php
+
+	$out = ob_get_clean();
 	return $out;
 
 }

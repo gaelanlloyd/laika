@@ -2,12 +2,15 @@
 
 function writeChartDefaults() {
 
-    $out = "";
+	ob_start();
 
-    $out .= "Chart.defaults.global.animation = false;";
-    $out .= "Chart.defaults.global.animationSteps = 60;";
-    $out .= "Chart.defaults.global.responsive = true;";
-    $out .= "Chart.defaults.global.maintainAspectRatio = false;";
+	?>
+    Chart.defaults.global.animation = false;
+    Chart.defaults.global.animationSteps = 60;
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.maintainAspectRatio = false;
+    <?php
 
+    $out = ob_get_clean();
     return $out;
 }
