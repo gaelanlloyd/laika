@@ -54,15 +54,13 @@
                         foreach ( $FILTER_MONTHS as $item ) {
 
                             // is this the currently selected value?
-                            if ( $NUM_MONTHS == $item ) { ?>
-                                <option selected value="<?php echo $item; ?>">
-                            <?php } else { ?>
-                                <option value="<?php echo $item; ?>">
-                            <?php }
-                            echo $item . " " . strtolower($GLOBALS['txtMonths']);
-                            ?>
-                            </option>
+                            if ( $NUM_MONTHS == $item ) {
+                                $selected = 'selected="selected"';
+                            } else {
+                                $selected = '';
+                            }
 
+                            ?><option <?php echo $selected; ?> value="<?php echo $item; ?>"><?php echo $item . " " . strtolower($GLOBALS['txtMonths']); ?></option>
                         <?php } ?>
 
                 </select>
