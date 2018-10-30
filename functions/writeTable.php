@@ -125,6 +125,16 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
 
         <?php
         // --- CSV -------------------------------------------------------------
+
+        $h_csv = $GLOBALS['txtDate'] . ",";
+
+        foreach ($chartSeriesLabels as $key => $dataLabelItem) {
+            $h_csv .= $dataLabelItem . ",";
+        }
+
+        // Strip off the trailing comma
+        $h_csv = substr( $h_csv, 0, -1 );
+
         ?>
 
         <div class="row">
@@ -133,13 +143,7 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
         <h3><?php echo $GLOBALS['txtCSVHeader']; ?></h3>
         <p><?php echo $GLOBALS['txtCSVInstructions']; ?></p>
 
-        <pre class="addMarginBottom"><?php echo $GLOBALS['txtDate'] . ","; ?>
-
-        <?php
-
-        foreach ($chartSeriesLabels as $key => $dataLabelItem) {
-            echo $dataLabelItem . ",";
-        }
+        <pre class="addMarginBottom"><?php echo $h_csv;
 
         echo "\n";
 
@@ -164,9 +168,7 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
 
             echo "\n";
         }
-        ?>
-
-        </pre>
+        ?></pre>
         </div>
 
         <?php
@@ -178,9 +180,7 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
         <h3><?php echo $GLOBALS['txtPivotHeader']; ?></h3>
         <p><?php echo $GLOBALS['txtPivotInstructions']; ?></p>
 
-        <pre class="addMarginBottom">
-
-        <?php
+        <pre class="addMarginBottom"><?php
 
         echo $GLOBALS['txtDate'] . "\t";
         echo $GLOBALS['txtSite'] . "\t";
@@ -203,9 +203,7 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
         foreach ( $temp as $t ) {
             echo $t;
         }
-        ?>
-
-        </pre>
+        ?></pre>
         </div>
 
         </div>
