@@ -53,8 +53,8 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
         <?php
         foreach ($chartSeriesLabels as $key => $dataLabelItem) { ?>
             <td class="series">
-            <div class="indicator" style="background-color: <?php echo getColor("strokeColor", $key); ?>;"></div>
-            <?php echo $dataLabelItem; ?>
+                <div class="indicator" style="background-color: <?php echo getColor("strokeColor", $key); ?>;"></div>
+                <?php echo $dataLabelItem; ?>
             </td>
         <?php } ?>
 
@@ -95,7 +95,7 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
         foreach ($chartSeriesLabels as $key => $dataLabelItem) { ?>
             <th>
             <div class="indicator" style="background-color: <?php echo getColor("strokeColor", $key); ?>"></div>
-            $dataLabelItem;
+            <?php echo $dataLabelItem; ?>
             </th>
         <?php } ?>
 

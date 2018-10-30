@@ -70,7 +70,7 @@ function writeChart($chartID, $chartType, $chartData, $chartSeriesLabels, $chart
     echo "</pre>";
     */
 
-    $labels = implode(',', $chartAxisLabels);
+    $labels = '"' . implode('", "', $chartAxisLabels) . '"';
 
     $ds = "";
 
