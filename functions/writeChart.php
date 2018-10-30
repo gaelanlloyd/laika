@@ -70,7 +70,14 @@ function writeChart($chartID, $chartType, $chartData, $chartSeriesLabels, $chart
     echo "</pre>";
     */
 
-    $labels = '"' . implode('", "', $chartAxisLabels) . '"';
+    // Write simpler YYYY-MM chart labels (instead of the full YYYY-MM-DD ones)
+    $cal = array();
+
+    foreach ( $chartAxisLabels as $c ) {
+        $cal[] = substr( $c, 0, 7 );
+    }
+
+    $labels = '"' . implode('", "', $cal) . '"';
 
     $ds = "";
 
