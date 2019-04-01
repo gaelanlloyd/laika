@@ -229,7 +229,7 @@ foreach ( $sites as $thisSite ) {
 
 	$txtStart  = $GLOBALS['txtStartFetchOperation'];
 	$txtStart .= " " . $thisSite["name"];
-	$txtStart .= " (site " . $thisSite["id"] . ")";
+	$txtStart .= " (site " . $thisSite["id"] . " / " . count($sites) . ")";
 	$txtStart .= " for " . $REPORT_DATE_NICE;
 	$txtStart .= " on pack member " . $CURRENT_HOST;
 
