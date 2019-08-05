@@ -6,6 +6,7 @@
  * @param string $chartTitle    (optional), otherwise title = site's name.
  * @param string $chartCaption  (optional), appears under the chart title.
  * @param string $sitesAsSeries (optional), transposes data.
+ * @param string $chartType     (optional), line, bar, pie, doughnut, scatter.
  *
  */
 
@@ -16,6 +17,7 @@ function writeReport( $atts ) {
         "chartTitle" => NULL,
         "chartCaption" => NULL,
         "sitesAsSeries" => NULL,
+        "chartType" => "line",
     );
 
     extract( array_merge( $defaults, $atts ) );
@@ -99,7 +101,7 @@ function writeReport( $atts ) {
         $args = array(
             'title' => $chartTitle,
             'caption' => $chartCaption,
-            'type' => 'line',
+            'type' => $chartType,
             'data' => $chartData,
             'labels_series' => $chartSeriesLabels,
             'labels_axis' => $chartAxisLabels,
