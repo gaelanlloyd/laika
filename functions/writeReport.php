@@ -22,6 +22,8 @@ function writeReport( $atts ) {
 
     extract( array_merge( $defaults, $atts ) );
 
+    $chartTitleOrig = $chartTitle;
+
     global $DATABASE;
     global $TBL_METRICS;
 
@@ -94,7 +96,7 @@ function writeReport( $atts ) {
         */
 
         // if a custom chart title is not specified, use the site's name
-        if ( empty($chartTitle) ) {
+        if ( empty($chartTitleOrig) ) {
             $chartTitle = $siteName;
         }
 
