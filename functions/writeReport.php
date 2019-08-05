@@ -1,6 +1,24 @@
 <?php
+/**
+ * Writes report output to the page.
+ *
+ * @param array  $reportData    The actual data you're charting.
+ * @param string $chartTitle    (optional), otherwise title = site's name.
+ * @param string $chartCaption  (optional), appears under the chart title.
+ * @param string $sitesAsSeries (optional), transposes data.
+ *
+ */
 
-function writeReport($reportData, $customTitle = NULL, $chartCaption = NULL, $sitesAsSeries = NULL) {
+function writeReport( $atts ) {
+
+    $defaults = array(
+        "reportData" => NULL,
+        "chartTitle" => NULL,
+        "chartCaption" => NULL,
+        "sitesAsSeries" => NULL,
+    );
+
+    extract( array_merge( $defaults, $atts ) );
 
     global $DATABASE;
     global $TBL_METRICS;
@@ -74,14 +92,21 @@ function writeReport($reportData, $customTitle = NULL, $chartCaption = NULL, $si
         */
 
         // if a custom chart title is not specified, use the site's name
-        if ( empty($customTitle) ) {
+        if ( empty($chartTitle) ) {
             $chartTitle = $siteName;
-        } else {
-            $chartTitle = $customTitle;
         }
 
+        $args = array(
+            'title' => $chartTitle,
+            'caption' => $chartCaption,
+            'type' => 'line',
+            'data' => $chartData,
+            'labels_series' => $chartSeriesLabels,
+            'labels_axis' => $chartAxisLabels,
+        );
+
         // write the chart data
-        echo writeReportItem($chartTitle, "line", $chartData, $chartSeriesLabels, $chartAxisLabels, $chartCaption);
+        echo writeReportItem( $args );
 
     }
 

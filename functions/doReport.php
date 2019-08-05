@@ -3,6 +3,9 @@
 function doReport($reportItem) {
 
 	$reportData = getData($reportItem);
-	echo writeReport($reportData);
+
+	echo writeReport( array(
+		"reportData" => $reportData,
+	) );
 
 }
