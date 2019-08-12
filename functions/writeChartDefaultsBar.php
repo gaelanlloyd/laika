@@ -21,14 +21,14 @@ function writeChartDefaultsBar() {
 
         scaleShowGridLines : true,
         scaleGridLineColor : "rgba(0,0,0,.05)",
-        scaleGridLineWidth : 1,
+        scaleGridLineWidth : 2,
         scaleShowHorizontalLines: true,
         scaleShowVerticalLines: true,
 
-        barShowStroke : true,
-        barStrokeWidth : 2,
-        barValueSpacing : 20,
-        barDatasetSpacing : 10,
+        barShowStroke : false,
+        barStrokeWidth : 0,
+        barValueSpacing : 5,
+        barDatasetSpacing : 0,
 
         legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
 
