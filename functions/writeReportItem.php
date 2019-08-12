@@ -5,12 +5,13 @@ function writeReportItem( $args ) {
 	/**
 	 * Write the report item to the screen using the data passed to it.
 	 *
-	 * @param string $title         Chart title.
-	 * @param string $caption       Chart caption.
-	 * @param string $type          Chart type ('line', default, or 'bar').
-	 * @param array  $data          Array with chart data.
-	 * @param array  $labels_series Array with chart series labels.
-	 * @param array  $labels_axis   Array with x-axis labels.
+	 * @param string $title             Chart title.
+	 * @param string $caption           Chart caption.
+	 * @param string $type              Chart type ('line', default, or 'bar').
+	 * @param array  $data              Array with chart data.
+	 * @param array  $chartSeriesLabels Array with chart series labels.
+	 * @param array  $chartAxisLabels   Array with x-axis labels.
+	 * @param int    $axisYMaxValue     Sets the y-axis maximum value.
 	 */
 
 	extract( $args );
@@ -41,12 +42,26 @@ function writeReportItem( $args ) {
 	// echo '<pre>Canvas name = [' . $canvasName . ']</pre>';
 
 	?>
+
+
 	<div class="reportItem">
 
 	<?php
 
-	echo writeChart($canvasName, $type, $data, $labels_series, $labels_axis);
-	echo writeTable($data, $labels_series, $labels_axis);
+	echo writeChart( array(
+		"chartID" => $canvasName,
+		"chartType" => $type,
+		"reportData" => $data,
+		"chartSeriesLabels" => $chartSeriesLabels,
+		"chartAxisLabels" => $chartAxisLabels,
+		"axisYMaxValue" => $axisYMaxValue,
+	) );
+
+	echo writeTable( array(
+		"reportData" => $data,
+		"chartSeriesLabels" => $chartSeriesLabels,
+		"chartAxisLabels" => $chartAxisLabels,
+	) );
 
 	?>
 	</div>

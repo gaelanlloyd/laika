@@ -18,6 +18,7 @@ function writeReport( $atts ) {
         "chartCaption" => NULL,
         "sitesAsSeries" => NULL,
         "chartType" => "line",
+        "axisYMaxValue" => NULL,
     );
 
     extract( array_merge( $defaults, $atts ) );
@@ -105,8 +106,9 @@ function writeReport( $atts ) {
             'caption' => $chartCaption,
             'type' => $chartType,
             'data' => $chartData,
-            'labels_series' => $chartSeriesLabels,
-            'labels_axis' => $chartAxisLabels,
+            'chartSeriesLabels' => $chartSeriesLabels,
+            'chartAxisLabels' => $chartAxisLabels,
+            'axisYMaxValue' => $axisYMaxValue,
         );
 
         // write the chart data

@@ -1,12 +1,20 @@
 <?php
 
-function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
+function writeTable( $atts ) {
+
+    $defaults = array(
+        "reportData" => NULL,
+        "chartSeriesLabels" => NULL,
+        "chartAxisLabels" => NULL
+    );
+
+    extract( array_merge( $defaults, $atts ) );
 
     ob_start();
 
     // EXPECTS DATA IN THIS FORMAT
 
-    // $chartData = array(
+    // $reportData = array(
     //     array(65,59,80,81,56,55,40),
     //     array(28,48,40,19,86,27,90)
     // );
@@ -38,7 +46,7 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
 
     // WRITE THE DATA TABLE
 
-    if ( empty($chartData) ) {
+    if ( empty($reportData) ) {
 
     	?><p><?php echo $GLOBALS['txtNoDataWasProvided']; ?></p><?php
 
@@ -77,8 +85,8 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
 
         // DEBUG
         /*
-        echo "<pre>\$chartData = \n";
-        echo print_r( $chartData );
+        echo "<pre>\$reportData = \n";
+        echo print_r( $reportData );
         echo "</pre>";
         */
         ?>
@@ -110,9 +118,9 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
             <th><?php echo $itemAxisLabel; ?></th>
 
             <?php
-            // For each chartData item, which are measurements
-            foreach ($chartData as $keyChartData => $chartDataItem) { ?>
-                <td><?php echo $chartData[$keyChartData][$itemAxisLabel]; ?></td>
+            // For each reportData item, which are measurements
+            foreach ($reportData as $keyreportData => $reportDataItem) { ?>
+                <td><?php echo $reportData[$keyreportData][$itemAxisLabel]; ?></td>
             <?php } ?>
 
             </tr>
@@ -152,14 +160,14 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
             echo $itemAxisLabel . ",";
 
             $i = 0;
-            $maxChartDataItems = count( $chartData ) - 1;
+            $maxreportDataItems = count( $reportData ) - 1;
 
-            // For each chartData item, which are measurements
-            foreach ($chartData as $keyChartData => $chartDataItem) {
-                echo $chartData[$keyChartData][$itemAxisLabel];
+            // For each reportData item, which are measurements
+            foreach ($reportData as $keyreportData => $reportDataItem) {
+                echo $reportData[$keyreportData][$itemAxisLabel];
 
                 // if this isn't the last item, add a comma
-                if ($i != $maxChartDataItems) {
+                if ($i != $maxreportDataItems) {
                     echo ",";
                 }
 
@@ -189,7 +197,7 @@ function writeTable($chartData, $chartSeriesLabels, $chartAxisLabels) {
         $temp = array();
 
         $cd = 0;
-        foreach ( $chartData as $siteData ) {
+        foreach ( $reportData as $siteData ) {
             $sd = 0;
             foreach ( $siteData as $siteMonthData ) {
                 $temp[] = $chartAxisLabels[$sd] . "\t" . $chartSeriesLabels[$cd] . "\t" . $siteMonthData . "\n";

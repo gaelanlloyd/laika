@@ -1,6 +1,23 @@
 <?php
 
-function writeChartDefaultsBar() {
+function writeChartDefaultsBar( $atts ) {
+
+    $defaults = array(
+        "axisYMaxValue" => NULL,
+    );
+
+    extract( array_merge( $defaults, $atts ) );
+
+    // --- Process max axis value ---
+
+    $modifyYAxisMaxValue = FALSE;
+
+    if ( !empty( $axisYMaxValue ) ) {
+
+        $modifyYAxisMaxValue = TRUE;
+        $suggestedMax = roundUpToNearest( $axisYMaxValue, 100 );
+
+    }
 
     ob_start();
 
@@ -8,14 +25,16 @@ function writeChartDefaultsBar() {
 
     var options = {
 
-        <?php /*
-        // Manually set Y-Axis;
-        $out .= "scaleOverride : true,";
-        $out .= "scaleSteps : 3,";
-        $out .= "scaleStepWidth : 50,";
-        $out .= "scaleStartValue : 0,";
-        */
-        ?>
+        <?php if ( $modifyYAxisMaxValue ) { ?>
+
+        <?php // Scale for Chart.js v1 is (scale steps / scale step width) = max scale number ?>
+
+        scaleOverride: true,
+        scaleSteps: <?php echo $suggestedMax / 50; ?>,
+        scaleStepWidth: 50,
+        scaleStartValue: 0,
+
+        <?php } ?>
 
         scaleBeginAtZero : true,
 
