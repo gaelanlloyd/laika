@@ -2,7 +2,7 @@
 
 function getColor($name, $id) {
 
-    $fillColor = array(
+    $fillColorSolid = array(
         "rgba(69,114,167,1)",
         "rgba(170,70,67,1)",
         "rgba(137,165,78,1)",
@@ -10,6 +10,16 @@ function getColor($name, $id) {
         "rgba(65,152,175,1)",
         "rgba(113,88,143,1)",
         "rgba(147,169,207,1)",
+    );
+
+    $fillColorTransparent = array(
+        "rgba(69,114,167,0.10)",
+        "rgba(170,70,67,0.10)",
+        "rgba(137,165,78,0.10)",
+        "rgba(219,132,61,0.10)",
+        "rgba(65,152,175,0.10)",
+        "rgba(113,88,143,0.10)",
+        "rgba(147,169,207,0.10)",
     );
 
     $strokeColor = array(

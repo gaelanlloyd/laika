@@ -106,14 +106,40 @@ function writeChart( $atts ) {
         */
 
         $ds .= "{";
-        $ds .= "label: \""                . $chartSeriesLabels[$i]              . "\",";
-        $ds .= "fillColor: \""            . getColor("fillColor",$i)            . "\",";
-        $ds .= "strokeColor: \""          . getColor("strokeColor",$i)          . "\",";
-        $ds .= "pointColor: \""           . getColor("pointColor",$i)           . "\",";
-        $ds .= "pointStrokeColor: \""     . getColor("pointStrokeColor",$i)     . "\",";
-        $ds .= "pointHighlightFill: \""   . getColor("pointHighlightFill",$i)   . "\",";
-        $ds .= "pointHighlightStroke: \"" . getColor("pointHighlightStroke",$i) . "\",";
-        $ds .= "data: ["                  . implode( ",", $reportData[$key])     . "]";
+
+        // $ds .= "repsonsive: true,";
+        // $ds .= "maintainAspectRatio: true,";
+
+        $ds .= "label: \"" . $chartSeriesLabels[$i] . "\",";
+
+        $ds .= "data: [" . implode( ",", $reportData[$key]) . "],";
+
+        switch ( $chartType ) {
+
+            case "bar";
+                $ds .= "backgroundColor: '" . getColor("fillColorSolid", $i) . "',";
+            break;
+
+            case "line";
+                $ds .= "backgroundColor: '" . getColor("fillColorTransparent", $i) . "',";
+            break;
+
+        }
+
+        $ds .= "borderColor: '" . getColor("strokeColor", $i) . "',";
+
+        $ds .= "pointBackgroundColor: '" . getColor("strokeColor", $i) . "',";
+        $ds .= "pointBorderColor: 'rgba(255,255,255,1)',";
+        $ds .= "pointBorderWidth: 2,";
+        $ds .= "pointRadius: 5,";
+
+        $ds .= "pointHitRadius: 20,";
+
+        $ds .= "pointHoverRadius: 5,";
+        $ds .= "pointHoverBorderWidth: 2,";
+        $ds .= "pointHoverBorderColor: \"" . getColor("pointHighlightStroke",$i) . "\",";
+        $ds .= "pointHoverBackgroundColor: \""   . getColor("pointHighlightFill",$i)   . "\",";
+
         $ds .= "},";
 
         $i++;
@@ -124,18 +150,23 @@ function writeChart( $atts ) {
 
         case "bar";
 
-            $defaults = writeChartDefaultsBar( array(
+            $defaults = writeChartDefaults( array(
+                "chartType" => "bar",
                 "axisYMaxValue" => $axisYMaxValue,
             ) );
 
-            $chart = "var myLineChart = new Chart(ctx).Bar(data, options);";
+            $chart = "var myLineChart = new Chart(ctx, { type: 'bar', data, options });";
+
 
         break;
 
         case "line";
 
-            $defaults = writeChartDefaultsLine();
-            $chart = "var myLineChart = new Chart(ctx).Line(data, options);";
+            $defaults = writeChartDefaults( array(
+                "chartType" => "line",
+            ) );
+
+            $chart = "var myLineChart = new Chart(ctx, { type: 'line', data, options });";
 
         break;
 
@@ -145,7 +176,6 @@ function writeChart( $atts ) {
 
     <script>
 
-        <?php echo writeChartDefaults(); ?>
         var ctx = document.getElementById("<?php echo $chartID; ?>").getContext("2d");
 
         // WRITE CHART DATA

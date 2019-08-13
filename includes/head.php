@@ -20,7 +20,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 
 	<!-- CHART.JS -->
-	<script src="js/chartjs/1.0.2/Chart.min.js"></script>
+	<script src="js/chartjs/2.8.0/Chart.min.js"></script>
 
 	<!-- FASTCLICK.JS -->
 	<script src="js/fastclick.js"></script>
