@@ -7,6 +7,7 @@
 Laika fetches web analytics data for you and outputs interactive, customizable dashboards that can be easily and quickly shared with teams of any size.
 
 - [Learn more about Laika at the official website.](http://www.golaika.com)
+- [View the changelog.](CHANGELOG.md)
 
 ## Cost and licensing
 
