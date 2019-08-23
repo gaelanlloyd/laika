@@ -54,6 +54,7 @@ function writeTable( $atts ) {
 
         // --- Write legend ----------------------------------------------------
 
+        /*
         ?>
         <div class="legend clearfix">
         <table><tbody><tr>
@@ -70,6 +71,7 @@ function writeTable( $atts ) {
         </div>
 
         <?php
+        */
 
         // --- Write table toggler button --------------------------------------
 

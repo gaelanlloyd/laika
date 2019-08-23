@@ -57,13 +57,11 @@ function writeReportItem( $args ) {
 		"axisYMaxValue" => $axisYMaxValue,
 	) );
 
-	/*
 	echo writeTable( array(
 		"reportData" => $data,
 		"chartSeriesLabels" => $chartSeriesLabels,
 		"chartAxisLabels" => $chartAxisLabels,
 	) );
-	*/
 
 	?>
 	</div>
