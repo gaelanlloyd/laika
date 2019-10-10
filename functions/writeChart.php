@@ -9,6 +9,7 @@ function writeChart( $atts ) {
         "chartSeriesLabels" => NULL,
         "chartAxisLabels" => NULL,
         "axisYMaxValue" => NULL,
+        "chartTitle" => NULL,
     );
 
     extract( array_merge( $defaults, $atts ) );
@@ -63,6 +64,10 @@ function writeChart( $atts ) {
     // -------------------------------------------------------------------------
 
     ?>
+
+    <?php if ( !empty( $chartTitle ) ) { ?>
+    <h4 class="reportChartTitle"><?php echo $chartTitle; ?></h4>
+    <?php } ?>
 
     <div class="reportChart">
         <canvas id="<?php echo $chartID; ?>"></canvas>

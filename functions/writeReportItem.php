@@ -49,6 +49,7 @@ function writeReportItem( $args ) {
 	<?php
 
 	echo writeChart( array(
+		// "chartTitle" => "Actual data",
 		"chartID" => $canvasName,
 		"chartType" => $type,
 		"reportData" => $data,
