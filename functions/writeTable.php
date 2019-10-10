@@ -4,6 +4,7 @@ function writeTable( $atts ) {
 
     $defaults = array(
         "reportData" => NULL,
+        "reportDataYOY" => NULL,
         "chartSeriesLabels" => NULL,
         "chartAxisLabels" => NULL
     );
@@ -43,6 +44,14 @@ function writeTable( $atts ) {
     }
 
     // -------------------------------------------------------------------------
+
+    // Was YOY data provided?
+
+    if ( !empty( $reportDataYOY ) ) {
+        $showYOY = TRUE;
+    } else {
+        $showYOY = FALSE;
+    }
 
     // WRITE THE DATA TABLE
 
@@ -99,17 +108,42 @@ function writeTable( $atts ) {
         <table class="table table-striped">
         <thead>
         <tr>
-        <th></th>
+            <th></th>
 
         <?php
         foreach ($chartSeriesLabels as $key => $dataLabelItem) { ?>
-            <th>
+
+            <?php if ( $showYOY ) { ?>
+                <th colspan="2">
+            <?php } else { ?>
+                <th>
+            <?php } ?>
+
             <div class="indicator" style="background-color: <?php echo getColor("strokeColor", $key); ?>"></div>
             <?php echo $dataLabelItem; ?>
             </th>
         <?php } ?>
 
         </tr>
+
+
+
+        <tr>
+            <th></th>
+        <?php
+        foreach ($chartSeriesLabels as $key => $dataLabelItem) { ?>
+
+            <th>Data</th>
+
+            <?php if ( $showYOY ) { ?>
+                <th>YoY &Delta;%</th>
+            <?php } ?>
+
+        <?php } ?>
+        </tr>
+
+
+
         </thead>
 	    <tbody>
 
@@ -123,6 +157,22 @@ function writeTable( $atts ) {
             // For each reportData item, which are measurements
             foreach ($reportData as $keyreportData => $reportDataItem) { ?>
                 <td><?php echo $reportData[$keyreportData][$itemAxisLabel]; ?></td>
+
+                <?php
+
+                    if ( $showYOY ) {
+
+                        $YOY = $reportDataYOY[$keyreportData][$itemAxisLabel];
+
+                        if ( $YOY < 0 ) {
+                            $cellClass = "negative";
+                        } else {
+                            $cellClass = "";
+                        }
+                ?>
+                <td class="<?php echo $cellClass; ?>"><?php echo round( $YOY, 1 ); ?>%</td>
+                <?php } ?>
+
             <?php } ?>
 
             </tr>

@@ -87,6 +87,8 @@ canvas { margin-bottom: 50px; }
 .homepageLogo { margin-top: 60px; }
 .demoMarker { background-color: #FF0000; border-radius: 10px; padding: 0.5em 1em; position: relative; top: 15px; color: #FFFFFF; font-weight: bold; }
 
+.negative { color: #FF0000; }
+
 /* --- ERROR ---------------------------------------------------------------- */
 
 .error { background-color: #F5A9A9; border: 1px solid #F58080; }

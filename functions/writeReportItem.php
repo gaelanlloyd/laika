@@ -41,6 +41,8 @@ function writeReportItem( $args ) {
 	// DEBUG
 	// echo '<pre>Canvas name = [' . $canvasName . ']</pre>';
 
+	$dataYOY = calculateYOY( $data );
+
 	?>
 
 
@@ -60,6 +62,7 @@ function writeReportItem( $args ) {
 
 	echo writeTable( array(
 		"reportData" => $data,
+		"reportDataYOY" => $dataYOY,
 		"chartSeriesLabels" => $chartSeriesLabels,
 		"chartAxisLabels" => $chartAxisLabels,
 	) );
