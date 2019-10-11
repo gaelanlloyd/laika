@@ -9,12 +9,11 @@ $formatMinSec = "%i:%s";
 
 $txtData = "Data";
 $txtMonths = "Months";
-$txtViewDataTable = "Toggle data table and CSV";
-$txtDataTableHeader = "Data table";
+$txtViewDataTable = "Show data table";
 $txtCSVHeader = "CSV";
 $txtCSVInstructions = "Copy and paste this into a plain text file to create a CSV of the chart data.";
 $txtPivotHeader = "Pivot table data";
-$txtPivotInstructions = "This data can be used to generate a pivot table.";
+$txtPivotInstructions = "Use this tab-delimited data for pivot tables in Excel.";
 $txtNoDataWasProvided = "No data was provided";
 $txtErrorTooMuchData = "Too much data (more than 7 series)";
 $txtErrorListNotDefined = "Error list not defined";

@@ -109,7 +109,7 @@ function writeTable( $atts ) {
             $class_th = "";
         } ?>
 
-        <div class="dataTable" style="display: none;">
+        <div class="dataTable addMarginTop" style="display: none;">
 
         <div class="table-responsive addMarginBottom">
         <table class="table table-striped addBorder">
@@ -212,13 +212,13 @@ function writeTable( $atts ) {
 
         ?>
 
-        <div class="row">
+        <div class="row addMarginTop2x">
         <div class="col-md-6">
 
-        <h3><?php echo $GLOBALS['txtCSVHeader']; ?></h3>
+        <h3 class="mt0"><?php echo $GLOBALS['txtCSVHeader']; ?></h3>
         <p><?php echo $GLOBALS['txtCSVInstructions']; ?></p>
 
-        <pre class="addMarginBottom"><?php echo $h_csv;
+        <pre class="addMarginBottom limitHeight"><?php echo $h_csv;
 
         echo "\n";
 
@@ -252,10 +252,10 @@ function writeTable( $atts ) {
 
         <div class="col-md-6">
 
-        <h3><?php echo $GLOBALS['txtPivotHeader']; ?></h3>
+        <h3 class="mt0"><?php echo $GLOBALS['txtPivotHeader']; ?></h3>
         <p><?php echo $GLOBALS['txtPivotInstructions']; ?></p>
 
-        <pre class="addMarginBottom"><?php
+        <pre class="addMarginBottom limitHeight"><?php
 
         echo $GLOBALS['txtDate'] . "\t";
         echo $GLOBALS['txtSite'] . "\t";

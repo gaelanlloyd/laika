@@ -40,6 +40,8 @@ h2.chartTitle { margin-top: 0; }
 .addBorder { border: 1px solid #DDDDDD; }
 .addBorderLeft { border-left: 1px solid #DDDDDD; }
 
+.limitHeight { max-height: 250px; }
+
 /* --- TOP NAV -------------------------------------------------------------- */
 
 .navbar-fixed-top { border: 0; }
