@@ -37,6 +37,9 @@ h2.chartTitle { margin-top: 0; }
 
 .monospace { font-family: monospace; }
 
+.addBorder { border: 1px solid #DDDDDD; }
+.addBorderLeft { border-left: 1px solid #DDDDDD; }
+
 /* --- TOP NAV -------------------------------------------------------------- */
 
 .navbar-fixed-top { border: 0; }
@@ -69,11 +72,12 @@ canvas { margin-bottom: 50px; }
 
 .table { width: auto; max-width: inherit; margin: 0 auto; }
 
-.table thead tr th,
-.table tbody tr th,
-.table tbody tr td { padding: 0.5em 2em 0.5em 0.5em; }
+.table thead tr th { padding: 0.5em 1em; }
 
-.indicator { width: 3em; height: 1em; }
+.table tbody tr th,
+.table tbody tr td { padding: 0.25em 1em; }
+
+.indicator { width: 3em; height: 1em; margin: 0 auto 0.5em auto; }
 
 /* --- TABLE LEGEND --------------------------------------------------------- */
 

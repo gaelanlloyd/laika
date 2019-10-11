@@ -100,12 +100,19 @@ function writeTable( $atts ) {
         echo print_r( $reportData );
         echo "</pre>";
         */
-        ?>
+
+        if ( $showYOY ) {
+            $class_td = "addBorderLeft";
+            $class_th = "addBorderLeft";
+        } else {
+            $class_td = "";
+            $class_th = "";
+        } ?>
 
         <div class="dataTable" style="display: none;">
 
         <div class="table-responsive addMarginBottom">
-        <table class="table table-striped">
+        <table class="table table-striped addBorder">
         <thead>
         <tr>
             <th></th>
@@ -114,13 +121,17 @@ function writeTable( $atts ) {
         foreach ($chartSeriesLabels as $key => $dataLabelItem) { ?>
 
             <?php if ( $showYOY ) { ?>
-                <th colspan="2">
+                <th colspan="2" class="text-center <?php echo $class_th; ?>">
             <?php } else { ?>
                 <th>
             <?php } ?>
 
-            <div class="indicator" style="background-color: <?php echo getColor("strokeColor", $key); ?>"></div>
+            <div style="width: 100%;">
+                <div class="indicator" style="background-color: <?php echo getColor("strokeColor", $key); ?>"></div>
+            </div>
+
             <?php echo $dataLabelItem; ?>
+
             </th>
         <?php } ?>
 
@@ -133,7 +144,7 @@ function writeTable( $atts ) {
         <?php
         foreach ($chartSeriesLabels as $key => $dataLabelItem) { ?>
 
-            <th>Data</th>
+            <th class="<?php echo $class_th; ?>">Data</th>
 
             <?php if ( $showYOY ) { ?>
                 <th>YoY &Delta;%</th>
@@ -156,7 +167,8 @@ function writeTable( $atts ) {
             <?php
             // For each reportData item, which are measurements
             foreach ($reportData as $keyreportData => $reportDataItem) { ?>
-                <td><?php echo $reportData[$keyreportData][$itemAxisLabel]; ?></td>
+
+                <td class="<?php echo $class_td; ?>"><?php echo $reportData[$keyreportData][$itemAxisLabel]; ?></td>
 
                 <?php
 
