@@ -14,6 +14,9 @@ function writeReportItem( $args ) {
 	 * @param int    $axisYMaxValue     Sets the y-axis maximum value.
 	 */
 
+	// DEBUG
+	/* ?><pre><?php print_r( $args ); ?></pre><?php */
+
 	extract( $args );
 
 	ob_start();
@@ -40,8 +43,6 @@ function writeReportItem( $args ) {
 
 	// DEBUG
 	// echo '<pre>Canvas name = [' . $canvasName . ']</pre>';
-
-	$dataYOY = calculateYOY( $data );
 
 	?>
 

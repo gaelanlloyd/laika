@@ -170,7 +170,7 @@ function writeTable( $atts ) {
                             $cellClass = "";
                         }
                 ?>
-                <td class="<?php echo $cellClass; ?>"><?php echo round( $YOY, 1 ); ?>%</td>
+                <td class="<?php echo $cellClass; ?>"><?php echo round( $YOY * 100, 1 ); ?>%</td>
                 <?php } ?>
 
             <?php } ?>

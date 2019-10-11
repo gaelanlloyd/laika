@@ -178,6 +178,8 @@ function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternate
 
 			foreach ($theseMonths as $theseMonthsItem) {
 
+				$lastYear = date('Y-m-d', strtotime('-1 years', strtotime($theseMonthsItem) ) );
+
 				// - Get the data for that item for that given month
 				$siteData = $DATABASE->select($TBL_DATA, "*", [
 					"AND" => [
@@ -187,10 +189,20 @@ function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternate
 					]
 				]);
 
-				// DEBUG
+				// - Get the data for that item for that given month last year, for YoY calcs
+				$siteDataLastYear = $DATABASE->select($TBL_DATA, "*", [
+					"AND" => [
+						"data_id" => $item,
+						"site" => $site["id"],
+						"date" => $lastYear
+					]
+				]);
+
 				/*
+				// DEBUG
 				echo "<pre>siteData[] = \n";
 				echo print_r( $siteData, TRUE );
+				echo print_r( $siteDataLastYear, TRUE );
 				echo "</pre>";
 				*/
 
@@ -200,6 +212,12 @@ function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternate
 					$thisValue = 0;
 				} else {
 					$thisValue = $siteData[0]["value"];
+				}
+
+				if (empty($siteDataLastYear)) {
+					$thisValueLastYear = 0;
+				} else {
+					$thisValueLastYear = $siteDataLastYear[0]["value"];
 				}
 
 				// Store each value
@@ -223,9 +241,15 @@ function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternate
 				// Do we need to flip sites as the series?
 
 				if ($sitesAsSeries) {
-					$values[$item][$thisSiteName][$theseMonthsItem] = $thisValue;
+
+					$values[$item][$thisSiteName][$theseMonthsItem]['actual'] = $thisValue;
+					$values[$item][$thisSiteName][$theseMonthsItem]['yoychg'] = calculateChange( $thisValueLastYear, $thisValue );
+
 				} else {
-					$values[$thisSiteName][$item][$theseMonthsItem] = $thisValue;
+
+					$values[$thisSiteName][$item][$theseMonthsItem]['actual'] = $thisValue;
+					$values[$thisSiteName][$item][$theseMonthsItem]['yoychg'] = calculateChange( $thisValueLastYear, $thisValue );
+
 				}
 
 			}  // end foreach theseMonthsItem
@@ -237,11 +261,11 @@ function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternate
 	echo "<pre>getData( \$values ) = \n";
 	echo print_r( $values, TRUE );
 	echo "</pre>";
-
-	echo "<pre>getData( \$axisLabels ) = \n";
-	echo print_r( $axisLabels, TRUE );
-	echo "</pre>";
 	*/
+
+	// echo "<pre>getData( \$axisLabels ) = \n";
+	// echo print_r( $axisLabels, TRUE );
+	// echo "</pre>";
 
 	return $values;
 

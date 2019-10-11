@@ -72,7 +72,8 @@ function writeReport( $atts ) {
             foreach ($item as $k => $i) {
 
                 // Store that data in the chartData array
-                $chartData[$key][$k] = $i;
+                $chartData[$key][$k] = $i['actual'];
+                $dataYOY[$key][$k] = $i['yoychg'];
 
                 // These only need to be written once, not for every series
                 if ($keepWritingAxisLabels) {
@@ -94,6 +95,10 @@ function writeReport( $atts ) {
         echo "<pre>writeReport/\$chartData\n";
         echo print_r( $chartData );
         echo "</pre>";
+
+        echo "<pre>writeReport/\$dataYOY\n";
+        echo print_r( $dataYOY );
+        echo "</pre>";
         */
 
         // if a custom chart title is not specified, use the site's name
@@ -106,6 +111,7 @@ function writeReport( $atts ) {
             'caption' => $chartCaption,
             'type' => $chartType,
             'data' => $chartData,
+            'dataYOY' => $dataYOY,
             'chartSeriesLabels' => $chartSeriesLabels,
             'chartAxisLabels' => $chartAxisLabels,
             'axisYMaxValue' => $axisYMaxValue,
