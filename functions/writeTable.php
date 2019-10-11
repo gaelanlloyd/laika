@@ -164,13 +164,16 @@ function writeTable( $atts ) {
 
                         $YOY = $reportDataYOY[$keyreportData][$itemAxisLabel];
 
+                        $YOYNice = round( $YOY * 100, 1 );
+                        $YOYNice = number_format( $YOYNice, 1 );
+
                         if ( $YOY < 0 ) {
                             $cellClass = "negative";
                         } else {
                             $cellClass = "";
                         }
                 ?>
-                <td class="<?php echo $cellClass; ?>"><?php echo round( $YOY * 100, 1 ); ?>%</td>
+                <td class="<?php echo $cellClass; ?>"><?php echo $YOYNice; ?>%</td>
                 <?php } ?>
 
             <?php } ?>
