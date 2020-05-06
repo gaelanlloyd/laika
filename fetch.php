@@ -13,9 +13,9 @@ if ( isset( $argv[1] ) ) { $CURRENT_HOST = $argv[1]; }
 if ( isset( $argv[2] ) ) { $REPORT_DATE  = $argv[2]; }
 if ( isset( $argv[3] ) ) { $FETCH_SITE   = $argv[3]; }
 
-$TENANT_URL   = "pack-members/";		// If this changes, also change it in [header.php]
+$TENANT_URL = "pack-members/";		// Also defined in [header.php]
 
-$COLLAR       = $TENANT_URL . $CURRENT_HOST . '/collar.php';
+$COLLAR = $TENANT_URL . $CURRENT_HOST . '/collar.php';
 
 // Show debugging output by uncommenting the following line
 $DEBUG_OUTPUT = TRUE;

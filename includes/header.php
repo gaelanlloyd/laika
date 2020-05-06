@@ -14,7 +14,7 @@ $CURRENT_HOST = $_SERVER['HTTP_HOST'];		// Used to determine which client to sho
 $CURRENT_URL  = $_SERVER['REQUEST_URI'];	// Used by nav to know which report is being shown
 											// Should be similar to /?r=1
 
-$TENANT_PATH  = "pack-members/";			// If this changes, also change it in [fetch.php]
+$TENANT_PATH  = "pack-members/";			// Also defined in [header.php]
 
 // Include the additional common items
 include('common.php');
