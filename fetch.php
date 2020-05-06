@@ -17,8 +17,10 @@ $TENANT_URL = "pack-members/";		// Also defined in [header.php]
 
 $COLLAR = $TENANT_URL . $CURRENT_HOST . '/collar.php';
 
+// Enable console debugging output
 // Note, this value could be overwritten by [collar.php]
-$DEBUG_OUTPUT = FALSE;
+// To enable debugging output in the frontend, edit [includes/header.php]
+$DEBUG_ENABLE = FALSE;
 
 // --- ERROR CHECKING ----------------------------------------------------------
 
@@ -525,9 +527,9 @@ function getValue($id) {
 
 function writeOutput($message, $doubleSpace = NULL) {
 
-	// Writes a message to the screen if $DEBUG_OUTPUT is TRUE
+	// Writes a message to the screen if $DEBUG_ENABLE is TRUE
 
-	if ( $GLOBALS["DEBUG_OUTPUT"] ) {
+	if ( $GLOBALS["DEBUG_ENABLE"] ) {
 		writeText( $message, $doubleSpace );
 	}
 
@@ -535,7 +537,7 @@ function writeOutput($message, $doubleSpace = NULL) {
 
 function writeText($message, $doubleSpace = NULL) {
 
-	// Writes a message to the screen regardless of $DEBUG_OUTPUT value
+	// Writes a message to the screen regardless of $DEBUG_ENABLE value
 	// Use writeText instead of writeOutput to display error messages
 
 	if ( $message == "separator" ) {

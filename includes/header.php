@@ -2,8 +2,7 @@
 
 // --- ENABLE DEBUGGING OUTPUT -------------------------------------------------
 
-// Uncomment this line to enable debugging output
-// $DEBUG_ENABLE = TRUE;
+$DEBUG_ENABLE = FALSE;
 
 
 // --- DASHBOARD INTERFACE VARIABLES -------------------------------------------
