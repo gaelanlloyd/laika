@@ -123,9 +123,9 @@ function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternate
 	// get data from specified sites
 	if ($site == NULL) {
 
-		// get data for all sites except those to ignore
+		// get data for all sites except those with showData = FALSE
 		$sites = $DATABASE->select($TBL_SITES, "*",
-			array( "ignore[!]" => 1 )
+			array( "showData" => 1 )
 		);
 
 	} else {
