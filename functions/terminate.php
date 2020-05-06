@@ -12,17 +12,17 @@ function terminate($failureTextA, $failureTextB = NULL) {
 
     <html><body>
     <img src="/images/logo-laika-100h-black.png" style="margin-top: 2em;">
-    <p style="<?php echo $pStyle; ?>"><?php echo $GLOBALS['txtSeriousError']; ?></p>
+    <p style="<?php echo $pStyle; ?>"><?php echo __t('SeriousError'); ?></p>
     <p style="<?php echo $pStyle; ?>"><?php echo $failureTextA;
 
     if ( strlen($failureTextB) > 0 ) { ?>
 	    </p>
-	    <p style="<?php echo $pStyle; ?>"><?php echo $GLOBALS['txtCaughtException']; ?>: <?php echo $failureTextB;
+	    <p style="<?php echo $pStyle; ?>"><?php echo __t('CaughtException'); ?>: <?php echo $failureTextB;
     } ?>
 
     </p>
 
-    <p style="<?php echo $pStyle; ?>"><?php echo $GLOBALS['txtPackMember']; ?> = <?php echo $CURRENT_HOST; ?></p>
+    <p style="<?php echo $pStyle; ?>"><?php echo __t('PackMember'); ?> = <?php echo $CURRENT_HOST; ?></p>
 
     <?php exit;
 

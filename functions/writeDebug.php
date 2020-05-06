@@ -19,8 +19,8 @@ function writeDebug() {
 	?>
 
 	<div class="well debug">
-	<p class="mt0 pull-right"><?php echo $GLOBALS['txtLaikaDebuggerConsole']; ?></p>
-	<!--<pre><?php echo $GLOBALS['txtDebuggingEnabled']; ?></pre>-->
+	<p class="mt0 pull-right"><?php echo __t('LaikaDebuggerConsole'); ?></p>
+	<!--<pre><?php echo __t('DebuggingEnabled'); ?></pre>-->
 
 	<?php // --- RUN DEBUGGING FUNCTIONS ------------------------------------ ?>
 

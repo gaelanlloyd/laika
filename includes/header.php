@@ -101,7 +101,7 @@ try {
 
 } catch (Exception $e) {
 
-	terminate($GLOBALS['txtErrorDatabaseConnectionFailed'], $e->getMessage());
+	terminate(__t('ErrorDatabaseConnectionFailed'), $e->getMessage());
 
 }
 
@@ -111,19 +111,19 @@ try {
 // Ensure there's tables with data in the database
 
 $dbTestCount = $DATABASE->count($TBL_DATA, ["LIMIT" => 1]);
-if ( $dbTestCount == 0 ) { terminate($GLOBALS['txtErrorNoDataInTBLDATA']); }
+if ( $dbTestCount == 0 ) { terminate(__t('ErrorNoDataInTBLDATA')); }
 
 $dbTestCount = $DATABASE->count($TBL_SITES, ["LIMIT" => 1]);
-if ( $dbTestCount == 0 ) { terminate($GLOBALS['txtErrorNoDataInTBLSITES']); }
+if ( $dbTestCount == 0 ) { terminate(__t('ErrorNoDataInTBLSITES')); }
 
 $dbTestCount = $DATABASE->count($TBL_METRICS, ["LIMIT" => 1]);
-if ( $dbTestCount == 0 ) { terminate($GLOBALS['txtErrorNoDataInTBLMETRICS']); }
+if ( $dbTestCount == 0 ) { terminate(__t('ErrorNoDataInTBLMETRICS')); }
 
 $dbTestCount = $DATABASE->count($TBL_MENU_GROUPS, ["LIMIT" => 1]);
-if ( $dbTestCount == 0 ) { terminate($GLOBALS['txtErrorNoDataInTBLMENUGROUPS']); }
+if ( $dbTestCount == 0 ) { terminate(__t('ErrorNoDataInTBLMENUGROUPS')); }
 
 $dbTestCount = $DATABASE->count($TBL_MENU_ITEMS, ["LIMIT" => 1]);
-if ( $dbTestCount == 0 ) { terminate($GLOBALS['txtErrorNoDataInTBLMENUITEMS']); }
+if ( $dbTestCount == 0 ) { terminate(__t('ErrorNoDataInTBLMENUITEMS')); }
 
 
 // -----------------------------------------------------------------------------

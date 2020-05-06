@@ -6,7 +6,7 @@ function writeDebugLoadedFiles() {
 
 	ob_start();
 
-	echo "<h5>" . $GLOBALS['txtLoadedFiles'] . "</h5>";
+	echo "<h5>" . __t('LoadedFiles') . "</h5>";
 	echo "<pre>";
 
 	foreach ($loadFile as $file) {

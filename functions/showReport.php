@@ -22,9 +22,9 @@ function showReport($reportItem) {
 
 		$errorList = array();
 
-		$errorMessage  = $GLOBALS['txtErrorReportFileMissingA'];
+		$errorMessage  = __t('ErrorReportFileMissingA');
 		$errorMessage .= " [" . $thisReport . "] ";
-		$errorMessage .= $GLOBALS['txtErrorReportFileMissingB'];
+		$errorMessage .= __t('ErrorReportFileMissingB');
 
 		$errorList[] = $errorMessage;
 

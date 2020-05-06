@@ -38,7 +38,7 @@ function writeChart( $atts ) {
     // Ensure too much data isn't passed in
     if ( count( $chartSeriesLabels ) > $GLOBALS['MAX_SERIES'] ) {
         $error = TRUE;
-        $errorList[] = $GLOBALS['txtErrorTooMuchData'];
+        $errorList[] = __t('ErrorTooMuchData');
     }
 
     // Ensure chart type is one of the valid choices
@@ -49,7 +49,7 @@ function writeChart( $atts ) {
 
         default;
             $error = TRUE;
-            $errorList[] = $GLOBALS['txtInvalidChartType'];
+            $errorList[] = __t('InvalidChartType');
         break;
     }
 

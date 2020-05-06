@@ -45,7 +45,7 @@
                 <?php // This hidden field will keep the currently-selected report shown while the filters are adjusted ?>
                 <input name="r" type="hidden" value="<?php echo $REPORT_ID; ?>">
 
-                <label for="controlNumberMonths">Show:</label>
+                <label for="controlNumberMonths"><?php echo __t('Show'); ?>:</label>
 
                 <select name="m" class="form-control" id="controlNumberMonths">
 
@@ -60,11 +60,11 @@
                                 $selected = '';
                             }
 
-                            ?><option <?php echo $selected; ?> value="<?php echo $item; ?>"><?php echo $item . " " . strtolower($GLOBALS['txtMonths']); ?></option>
+                            ?><option <?php echo $selected; ?> value="<?php echo $item; ?>"><?php echo $item . " " . strtolower(__t('Months')); ?></option>
                         <?php } ?>
 
                 </select>
-                <input type="submit" class="form-control" value="Go">
+                <input type="submit" class="form-control" value="<?php echo __t('Go'); ?>">
             </form>
 
         </div>

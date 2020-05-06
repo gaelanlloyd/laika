@@ -58,6 +58,9 @@ include('includes/common.php');
 // That way we can debug on it later (look in footer.php)
 $loadFile = array();
 
+// Translation store
+$loadFile[] = 'functions/translation-store.php';
+
 // String translations
 $loadFile[] = 'translations/' . $LANGUAGE . '.php';
 
@@ -110,7 +113,7 @@ try {
 
 } catch ( Exception $e ) {
 
-	writeText($GLOBALS['txtErrorDatabaseConnectionFailed'] . " " . $e->getMessage());
+	writeText( __t('ErrorDatabaseConnectionFailed') . " " . $e->getMessage());
 	exit;
 
 }
@@ -145,7 +148,7 @@ foreach ( $sites as $thisSite ) {
 	$txt_debug_sitelist .= $thisSite['id'] . " ";
 	// writeOutput( $thisSite['id'] . ",\"" . $thisSite['name'] . "\"" );
 }
-writeOutput("Data will be fetched for these sites: " . $txt_debug_sitelist);
+writeOutput( __t('DataWillBeFetchedForTheseSites') . ": " . $txt_debug_sitelist);
 
 // DEBUG
 // Manual override, only look up data for certain sites (for faster testing)
@@ -157,9 +160,9 @@ $sites = $DATABASE->select( $TBL_SITES , "*", [
 
 // Check for error: Is the requested report date in the future?
 if ( strtotime($REPORT_DATE) > time() ) {
-	$txtError  = $GLOBALS['txtErrorFutureDataA'];
+	$txtError  = __t('ErrorFutureDataA');
 	$txtError .= " " . $REPORT_DATE . " ";
-	$txtError .= $GLOBALS['txtErrorFutureDataB'];
+	$txtError .= __t('ErrorFutureDataB');
 
 	writeText($txtError);
 	exit;
@@ -170,9 +173,9 @@ if ( $SITE_MANUALLY_DEFINED ) {
 
 	if ( empty($sites) ) {
 
-		$txtError = $GLOBALS['txtErrorSiteDoesNotExistA'];
+		$txtError = __t('ErrorSiteDoesNotExistA');
 		$txtError .= " " . $FETCH_SITE . " ";
-		$txtError .= $GLOBALS['txtErrorSiteDoesNotExistB'];
+		$txtError .= __t('ErrorSiteDoesNotExistB');
 
 		writeText($txtError);
 		exit;
@@ -182,7 +185,7 @@ if ( $SITE_MANUALLY_DEFINED ) {
 } else {
 
 	if ( empty($sites) ) {
-		writeText($GLOBALS['txtErrorNoSitesDefined'], TRUE);
+		writeText(__t('ErrorNoSitesDefined'), TRUE);
 		exit;
 	}
 
@@ -213,17 +216,17 @@ if ( $SITE_MANUALLY_DEFINED ) {
 
 if ( !empty($existingData) ) {
 
-	$txtError  = $GLOBALS['txtErrorDataAlreadyExistsA'];
+	$txtError  = __t('ErrorDataAlreadyExistsA');
 	$txtError .= " " . $CURRENT_HOST . ", ";
-	$txtError .= $GLOBALS['txtErrorDataAlreadyExistsB'];
+	$txtError .= __t('ErrorDataAlreadyExistsB');
 	$txtError .= " " . $REPORT_DATE . ", ";
 
 	if ( !empty($FETCH_SITE) ) {
-		$txtError .= $GLOBALS['txtErrorDataAlreadyExistsC'];
+		$txtError .= __t('ErrorDataAlreadyExistsC');
 		$txtError .= " " . $FETCH_SITE . ", ";
 	}
 
-	$txtError .= $GLOBALS['txtErrorDataAlreadyExistsD'];
+	$txtError .= __t('ErrorDataAlreadyExistsD');
 
 	writeText($txtError);
 	exit;
@@ -233,13 +236,13 @@ if ( !empty($existingData) ) {
 
 // Output the start time
 $timeStart = new DateTime();
-$txtTimeStart = $timeStart->format($GLOBALS['formatFullDate']);
-writeText($GLOBALS['txtStartedAt'] . " " . $txtTimeStart , TRUE);
+$txtTimeStart = $timeStart->format( __t('formatFullDate') );
+writeText( __t('StartedAt') . " " . $txtTimeStart , TRUE);
 
 // Perform the operations iteratively for each site
 foreach ( $sites as $thisSite ) {
 
-	$txtStart  = $GLOBALS['txtStartFetchOperation'];
+	$txtStart  = __t('StartFetchOperation');
 	$txtStart .= " " . $thisSite["name"];
 	$txtStart .= " (site " . $thisSite["id"] . " / " . count($sites) . ")";
 	$txtStart .= " for " . $REPORT_DATE_NICE;
@@ -277,7 +280,7 @@ foreach ( $sites as $thisSite ) {
 
 	// DEBUG
 	$theseOperations = "  - ";
-	writeOutput($GLOBALS['txtOperationsToPerform']);
+	writeOutput(__t('OperationsToPerform'));
 	foreach ( $operations as $thisOperation ) {
 		$theseOperations .= $thisOperation["id"] . ",";
 	}
@@ -300,7 +303,7 @@ foreach ( $sites as $thisSite ) {
 
 		$skip = FALSE;
 
-		writeOutput($GLOBALS['txtOperationNumber'] . $thisOperation["id"]);
+		writeOutput(__t('OperationNumber') . $thisOperation["id"]);
 
 		// Define reasons why an operation should be skipped:
 		// - metrics/operation field is empty
@@ -308,7 +311,7 @@ foreach ( $sites as $thisSite ) {
 		// Skip if the metrics/operation field is empty
 		if ( empty( $thisOperation["operation"] ) ) {
 
-			writeOutput("  - " . $GLOBALS['txtOperationSkipped'], TRUE);
+			writeOutput("  - " . __t('OperationSkipped'), TRUE);
 			$skip = TRUE;
 
 		}
@@ -334,15 +337,15 @@ foreach ( $sites as $thisSite ) {
 
 // Output the end time and calculate execution duration
 $timeEnd = new DateTime();
-$txtTimeEnd = $timeEnd->format($GLOBALS['formatFullDate']);
+$txtTimeEnd = $timeEnd->format( __t('formatFullDate') );
 $timeDuration = $timeEnd->diff($timeStart,TRUE);
-$txtDuration = $timeDuration->format($GLOBALS['formatMinSec']);
+$txtDuration = $timeDuration->format( __t('formatMinSec') );
 
-$txtComputationTime  = $GLOBALS['txtFinishedAtA'];
+$txtComputationTime  = __t('FinishedAtA');
 $txtComputationTime .= " ";
 $txtComputationTime .= $txtTimeEnd;
 $txtComputationTime .= " ";
-$txtComputationTime .= $GLOBALS['txtFinishedAtB'];
+$txtComputationTime .= __t('FinishedAtB');
 $txtComputationTime .= " ";
 $txtComputationTime .= $txtDuration;
 
@@ -422,7 +425,7 @@ function fetchGoalData() {
 	if ( empty( $thisGoal ) ) {
 
 		// DEBUG
-		writeOutput("    - " . $GLOBALS['txtGoalNoData']);
+		writeOutput("    - " . __t('GoalNoData'));
 		$value = 0;
 
 	} else {
@@ -443,11 +446,11 @@ function fetchGoalData() {
 		// Observe rate quota by sleeping after each GAPI request
 		sleep( $FETCH_THROTTLE_DELAY );
 
-		$txt  = "  - " . $GLOBALS['txtSite'];
+		$txt  = "  - " . __t('Site');
 		$txt .= $thisSite["id"];
-		$txt .= ", " . $GLOBALS['txtGANProfileID'];
+		$txt .= ", " . __t('GANProfileID');
 		$txt .= " = " . $thisGoal[0]["gan_profile"];
-		$txt .= ", " . $GLOBALS['txtGoalID'];
+		$txt .= ", " . __t('GoalID');
 		$txt .= " = " . $thisGoal[0]["gan_goal_id"];
 
 		// writeOutput("    - Site = " . $thisSite["id"] . ", GAN Profile ID = " . $thisGoal[0]["gan_profile"] . ", Goal ID = " . $thisGoal[0]["gan_goal_id"]);
@@ -504,11 +507,11 @@ function getValue($id) {
 
 	if ( empty($value) ) {
 
-		$txt  = $GLOBALS['txtErrorGetValueFailedA'];
+		$txt  = __t('ErrorGetValueFailedA');
 		$txt .= $id;
-		$txt .= $GLOBALS['txtErrorGetValueFailedB'];
+		$txt .= __t('ErrorGetValueFailedB');
 		$txt .= " " . $thisOperation["id"] . " ";
-		$txt .= $GLOBALS['txtErrorGetValueFailedC'];
+		$txt .= __t('ErrorGetValueFailedC');
 
 		writeText($txt);
 		exit;
@@ -581,7 +584,7 @@ function writeFinalReport() {
 
 	}
 
-	writeText($GLOBALS['txtFinalReport'], TRUE);
+	writeText(__t('FinalReport'), TRUE);
 
 	writeText("id,date,site,data_id,value");
 

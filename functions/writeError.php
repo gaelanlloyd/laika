@@ -7,7 +7,7 @@ function writeError($procedure, $errorList) {
     ob_start();
 
     if (empty($errorList)) {
-        $errorList = "<li>" . $GLOBALS['txtErrorListNotDefined'] . "</li>";
+        $errorList = "<li>" . __t('ErrorListNotDefined') . "</li>";
     }
 
     echo "<pre class=\"error\">";

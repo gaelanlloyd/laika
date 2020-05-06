@@ -32,7 +32,7 @@ function writeTable( $atts ) {
 
     if ( count($chartSeriesLabels) > $GLOBALS['MAX_SERIES'] ) {
         $error = TRUE;
-        $errorList[] = $GLOBALS['txtErrorTooMuchData'];
+        $errorList[] = __t('ErrorTooMuchData');
     }
 
     // -------------------------------------------------------------------------
@@ -57,7 +57,7 @@ function writeTable( $atts ) {
 
     if ( empty($reportData) ) {
 
-    	?><p><?php echo $GLOBALS['txtNoDataWasProvided']; ?></p><?php
+    	?><p><?php echo __t('NoDataWasProvided'); ?></p><?php
 
     } else {
 
@@ -87,7 +87,7 @@ function writeTable( $atts ) {
         ?>
         <p class="text-center">
         <a href="javascript:void(0)" class="toggler btn btn-default">
-        <?php echo $GLOBALS['txtViewDataTable']; ?>
+        <?php echo __t('ViewDataTable'); ?>
         </a>
         </p>
         <?php
@@ -201,7 +201,7 @@ function writeTable( $atts ) {
         <?php
         // --- CSV -------------------------------------------------------------
 
-        $h_csv = $GLOBALS['txtDate'] . ",";
+        $h_csv = __t('Date') . ",";
 
         foreach ($chartSeriesLabels as $key => $dataLabelItem) {
             $h_csv .= $dataLabelItem . ",";
@@ -215,8 +215,8 @@ function writeTable( $atts ) {
         <div class="row addMarginTop2x">
         <div class="col-md-6">
 
-        <h3 class="mt0"><?php echo $GLOBALS['txtCSVHeader']; ?></h3>
-        <p><?php echo $GLOBALS['txtCSVInstructions']; ?></p>
+        <h3 class="mt0"><?php echo __t('CSVHeader'); ?></h3>
+        <p><?php echo __t('CSVInstructions'); ?></p>
 
         <pre class="addMarginBottom limitHeight"><?php echo $h_csv;
 
@@ -252,14 +252,14 @@ function writeTable( $atts ) {
 
         <div class="col-md-6">
 
-        <h3 class="mt0"><?php echo $GLOBALS['txtPivotHeader']; ?></h3>
-        <p><?php echo $GLOBALS['txtPivotInstructions']; ?></p>
+        <h3 class="mt0"><?php echo __t('PivotHeader'); ?></h3>
+        <p><?php echo __t('PivotInstructions'); ?></p>
 
         <pre class="addMarginBottom limitHeight"><?php
 
-        echo $GLOBALS['txtDate'] . "\t";
-        echo $GLOBALS['txtSite'] . "\t";
-        echo $GLOBALS['txtSessions'] . "\n";
+        echo __t('Date') . "\t";
+        echo __t('Site') . "\t";
+        echo __t('Sessions') . "\n";
 
         $temp = array();
 

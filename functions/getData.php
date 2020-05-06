@@ -33,7 +33,7 @@ function getData($reportItem, $site = NULL, $sitesAsSeries = NULL, $useAlternate
     /*
     if ( !is_null( $site ) && !is_numeric( $site ) ) {
     	$error = TRUE;
-    	$errorList[] = $GLOBALS['txtInvalidSiteParameter'];
+    	$errorList[] = __t( 'InvalidSiteParameter' );
     }
     */
 
