@@ -17,7 +17,8 @@ $TENANT_URL   = "pack-members/";		// If this changes, also change it in [header.
 
 $COLLAR       = $TENANT_URL . $CURRENT_HOST . '/collar.php';
 
-// $DEBUG = TRUE // Force debugging by uncommenting this line
+// Show debugging output by uncommenting the following line
+$DEBUG_OUTPUT = TRUE;
 
 // --- ERROR CHECKING ----------------------------------------------------------
 
@@ -521,10 +522,9 @@ function getValue($id) {
 
 function writeOutput($message, $doubleSpace = NULL) {
 
-	// Writes a message to the screen if $DEBUG is TRUE
-	global $DEBUG;
+	// Writes a message to the screen if $DEBUG_OUTPUT is TRUE
 
-	if ( $DEBUG ) {
+	if ( $GLOBALS["DEBUG_OUTPUT"] ) {
 		writeText( $message, $doubleSpace );
 	}
 
@@ -532,7 +532,7 @@ function writeOutput($message, $doubleSpace = NULL) {
 
 function writeText($message, $doubleSpace = NULL) {
 
-	// Writes a message to the screen regardless of $DEBUG value
+	// Writes a message to the screen regardless of $DEBUG_OUTPUT value
 	// Use writeText instead of writeOutput to display error messages
 
 	if ( $message == "separator" ) {
