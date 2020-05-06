@@ -17,8 +17,8 @@ $TENANT_URL = "pack-members/";		// Also defined in [header.php]
 
 $COLLAR = $TENANT_URL . $CURRENT_HOST . '/collar.php';
 
-// Show debugging output by uncommenting the following line
-$DEBUG_OUTPUT = TRUE;
+// Note, this value could be overwritten by [collar.php]
+$DEBUG_OUTPUT = FALSE;
 
 // --- ERROR CHECKING ----------------------------------------------------------
 
