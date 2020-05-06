@@ -116,13 +116,14 @@ try {
 
 // --- CHECK FOR ERRORS --------------------------------------------------------
 
-// Get the list of all sites that Laika will be fetching data for (that don't have [ignore = 1])
+// Get the list of all sites that Laika will be fetching data for.
+// Skip any sites that don't have [fetchData=1]
 
 if ( $SITE_MANUALLY_DEFINED ) {
 
 	$sites = $DATABASE->select($TBL_SITES , "*", [
 			"AND" => [
-				"ignore[!]" => 1,
+				"fetchData" => 1,
 				"id" => $FETCH_SITE
 			]
 		]);
@@ -130,10 +131,20 @@ if ( $SITE_MANUALLY_DEFINED ) {
 } else {
 
 	$sites = $DATABASE->select($TBL_SITES , "*", [
-			"ignore[!]" => 1
+			"fetchData" => 1
 		]);
 
 }
+
+// DEBUG
+// Write the list of sites that will have Laika will fetch data for.
+
+$txt_debug_sitelist = NULL;
+foreach ( $sites as $thisSite ) {
+	$txt_debug_sitelist .= $thisSite['id'] . " ";
+	// writeOutput( $thisSite['id'] . ",\"" . $thisSite['name'] . "\"" );
+}
+writeOutput("Data will be fetched for these sites: " . $txt_debug_sitelist);
 
 // DEBUG
 // Manual override, only look up data for certain sites (for faster testing)
