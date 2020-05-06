@@ -71,13 +71,10 @@ function writeDebug() {
 
 	<?php
 		$myData = getData("1");
-
-		echo "<pre>MyData:\n\n";
-
-		print_r( $myData );
-
-		echo "</pre>";
 	?>
+
+	<h5>DB: MyData (<?php echo count($myData); ?>)</h5>
+	<pre><?php print_r( $myData ); ?></pre>
 
 	<?php // ---------------------------------------------------------------- ?>
 
