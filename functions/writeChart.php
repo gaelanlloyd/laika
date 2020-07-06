@@ -10,6 +10,7 @@ function writeChart( $atts ) {
         "chartAxisLabels" => NULL,
         "axisYMaxValue" => NULL,
         "chartTitle" => NULL,
+        "backgroundColor" => NULL,
     );
 
     extract( array_merge( $defaults, $atts ) );
@@ -126,7 +127,21 @@ function writeChart( $atts ) {
             break;
 
             case "line";
-                $ds .= "backgroundColor: '" . getColor("fillColorTransparent", $i) . "',";
+
+                if ( empty( $backgroundColor ) ) {
+
+                    // If there are more than two series, turn off background fill
+                    // so that the charts don't look muddy
+
+                    if ( count( $chartSeriesLabels ) > 2 ) {
+                        $backgroundColor = "fillColorNone";
+                    } else {
+                        $backgroundColor = "fillColorTransparent";
+                    }
+                }
+
+                $ds .= "backgroundColor: '" . getColor($backgroundColor, $i) . "',";
+
             break;
 
         }

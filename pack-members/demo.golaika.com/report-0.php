@@ -7,6 +7,7 @@
                 "chartTitle" => "<a href=\"/?r=1\">Overall traffic</a>",
                 "chartCaption" => "The total number of page views to each website.",
                 "sitesAsSeries" => TRUE,
+                // "backgroundColor" => "fillColorNone",
             ));
         ?>
     </div>

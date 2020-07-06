@@ -59,6 +59,7 @@ function writeReportItem( $args ) {
 		"chartSeriesLabels" => $chartSeriesLabels,
 		"chartAxisLabels" => $chartAxisLabels,
 		"axisYMaxValue" => $axisYMaxValue,
+		"backgroundColor" => $backgroundColor,
 	) );
 
 	echo writeTable( array(

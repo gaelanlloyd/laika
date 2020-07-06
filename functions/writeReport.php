@@ -19,6 +19,7 @@ function writeReport( $atts ) {
         "sitesAsSeries" => NULL,
         "chartType" => "line",
         "axisYMaxValue" => NULL,
+        "backgroundColor" => NULL,
     );
 
     extract( array_merge( $defaults, $atts ) );
@@ -115,6 +116,7 @@ function writeReport( $atts ) {
             'chartSeriesLabels' => $chartSeriesLabels,
             'chartAxisLabels' => $chartAxisLabels,
             'axisYMaxValue' => $axisYMaxValue,
+            'backgroundColor' => $backgroundColor,
         );
 
         // write the chart data
