@@ -11,7 +11,7 @@
             <a class="navbar-brand" href="/"><img src="/images/logo-laika-100h-white.png" width="142" height="50"></a>
 
             <?php if ( isDevSite() ) { ?>
-                <span class="demoMarker">DEMO</span>
+                <span class="demoMarker">LIVE DEMO</span>
             <?php } ?>
 
         </div>
