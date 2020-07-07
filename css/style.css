@@ -91,7 +91,7 @@ canvas { margin-bottom: 50px; }
 /* --- MISC ----------------------------------------------------------------- */
 
 .homepageLogo { margin-top: 60px; }
-.demoMarker { background-color: #FF0000; border-radius: 10px; padding: 0.5em 1em; position: relative; top: 15px; color: #FFFFFF; font-weight: bold; animation: blinkingText 2s infinite; animation-timing-function: ease-in-out; }
+.demoMarker { background-color: #FF0000; border-radius: 10px; padding: 0.5em 1em; color: #FFFFFF; font-weight: bold; animation: blinkingText 2s infinite; animation-timing-function: ease-in-out; display: inline-block; margin-top: 9px; }
 
 @keyframes blinkingText {
   0%{ opacity: 1; }

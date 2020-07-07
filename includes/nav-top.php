@@ -1,5 +1,6 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
@@ -10,12 +11,20 @@
 
             <a class="navbar-brand" href="/"><img src="/images/logo-laika-100h-white.png" width="142" height="50"></a>
 
-            <?php if ( isDevSite() ) { ?>
-                <span class="demoMarker">LIVE DEMO</span>
-            <?php } ?>
-
         </div>
+
+
         <div id="navbar" class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav navbar-left">
+
+                <?php if ( isDevSite() ) { ?>
+                    <div class="demoMarker">LIVE DEMO</div>
+                <?php } ?>
+
+            </ul>
+
+
             <ul class="nav navbar-nav navbar-right">
                 <?php /*
                 <li><a href="#">Dashboard</a></li>
