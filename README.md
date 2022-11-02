@@ -1,3 +1,17 @@
+# NOTE
+
+This project is old has been archived.
+
+<br />
+<br />
+<br />
+
+---
+
+<br />
+<br />
+<br />
+
 ![Laika](/images/logo-laika-100h-black-cropped.png?raw=true "Laika")
 
 ![Laika dashboard example](/images/laika-ipad-landscape.png?raw=true "Laika dashboard example")
